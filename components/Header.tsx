@@ -14,9 +14,9 @@ const LINK_FOCUS_STLYE = "border-b-2 text-black font-semibold border-sky-500 tex
 
 const LINKS = [
      { name: "Home", href: "/" },
-     { name: "Contact", href: "/contact" },
-     { name: "Contact", href: "/contact" },
-     { name: "Contact", href: "/contact" },
+     { name: "Cuộc tình", href: "/contact" },
+     { name: "Contact", href: "/1" },
+     { name: "Contact", href: "/2" },
 ];
 
 export default function Header(): JSX.Element {
@@ -25,7 +25,7 @@ export default function Header(): JSX.Element {
      const pathname = usePathname();
 
      return <>
-          <header className={`p-12 w-full z-1 relative`}>
+          <header className={`p-12 w-dvw z-1 relative`}>
                <nav className={`p-2 min-h-10  rounded-xl border-solid border-gray-300 border-1 shadow-xl ${'bg-white'} `}>
                     <ul className="pl-0 flex justify-center items-center gap-8">
                          <li className="min-h-10 flex-1 flex items-center transition delay-150 duration-300 ease-in-out hover:scale-105">
