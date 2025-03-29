@@ -52,9 +52,6 @@ export default function Header(): JSX.Element {
                          </li>
                     </ul>
                </nav>
-
-
-
           </header>
      </>
 }

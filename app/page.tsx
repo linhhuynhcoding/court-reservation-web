@@ -1,5 +1,6 @@
 import { Backgound } from "@/components/Backgound";
 import { FooterWithSocialLinks } from "@/components/FooterWithSocialLinks";
+import { HomeBookingForm } from "@/components/HomeBookingForm";
 
 
 export default function Home() {
@@ -20,9 +21,16 @@ export default function Home() {
               <li className="italic w-fit xl:text-5xl lg:text-3xl font-medium text-gray-100 capitalize drop-shadow-lg">
                 <h1>Không nên vượt mức Pickleball!</h1>
               </li>
+              <li className="w-fit xl:text-base lg:text-sm font-xs text-gray-100 drop-shadow-lg">
+                <p>Thiên lý ơi em có thể ở lại đây không biết chăng ngoài trời mưa giông nhiều cô đơn lắm em!</p>
+              </li>
             </ol>
           </div>
-          <div className="flex-1 "></div>
+          <div className="flex-1 ">
+            <HomeBookingForm>
+              
+            </HomeBookingForm>
+          </div>
         </div>
 
       </main>
