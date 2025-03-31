@@ -6,10 +6,10 @@ import { HomeBookingForm } from "@/components/HomeBookingForm";
 export default function Home() {
   return (
     <div className="overflow-hidden h-full font-display">
-      <Backgound />
 
+      <Backgound />
       <main className="relative h-dvh flex flex-col gap-[32px] ">
-        <div className="h-fit flex p-12 w-full">
+        <div className="h-fit flex xl:flex-row flex-col p-12 w-full gap-10">
           <div className="flex-2 text-xl">
             <ol className="flex flex-col xl:gap-10 lg:gap-6  gap-4">
               <li className={`w-fit bg-green-100 text-green-900 rounded-md `}>
@@ -26,7 +26,7 @@ export default function Home() {
               </li>
             </ol>
           </div>
-          <div className="flex-1 ">
+          <div className="flex-1 relative xl:w-[500px] lg:w-[400px] w-full h-fit">
             <HomeBookingForm>
               
             </HomeBookingForm>

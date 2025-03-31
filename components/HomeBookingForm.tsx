@@ -8,28 +8,24 @@ import { Button } from "@/components/ui/button"
 import {
      Form,
      FormControl,
-     FormDescription,
      FormField,
      FormItem,
      FormLabel,
      FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "./ui/calendar";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
-interface FieldsProperties {
-     label: string,
-     description: string,
-     placeholder: string,
-     style?: string,
-}
 
 const formSchema = z.object({
      location: z.string().min(2, {
           message: "Username must be at least 2 characters.",
      }),
-     date: z.string().min(2, {
-          message: "Username must be at least 2 characters.",
-     }),
+     date: z.date(),
      time: z.string().min(2, {
           message: "Username must be at least 2 characters.",
      }),
@@ -38,49 +34,25 @@ const formSchema = z.object({
      }),
 })
 
-const fields : {
-     [index: string] : FieldsProperties
-} = {
-     location: {
-          label: "Location",
-          description: "This is your public display name.",
-          placeholder: "Select your location",
-     },
-     date: {
-          label: "Date",
-          description: "This is your public display name.",
-          placeholder: "Choose date",
-     },
-     time: {
-          label: "Time",
-          description: "This is your public display name.",
-          placeholder: "Choose time",
-     },
-     duration: {
-          label: "Duration",
-          description: "This is your public display name.",
-          placeholder: "Select duration",
-     },
-}
-
+type FormFields = z.infer<typeof formSchema>;
 
 export function HomeBookingForm() {
      // 1. Define your form.
-     const form = useForm<z.infer<typeof formSchema>>({
+     const form = useForm<FormFields>({
           resolver: zodResolver(formSchema),
           defaultValues: {
-               location: "",
-               date: "",
+               location: "dark",
+               date: undefined,
                time: "",
                duration: "",
           },
      })
 
      // 2. Define a submit handler.
-     function onSubmit(values: z.infer<typeof formSchema>) {
+     function onSubmit(values: FormFields) {
           // Do something with the form values.
           // ✅ This will be type-safe and validated.
-          console.log(values)
+          console.log("values: ", values);
      }
 
      return (
@@ -96,23 +68,123 @@ export function HomeBookingForm() {
                     <div className="flex flex-col gap-2 w-full h-full">
                          <Form {...form}>
                               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                                   {(formSchema.keyof().options).map((field, index) =>
-                                   (<FormField key={index}
+                                   {/* LOCATION */}
+                                   <FormField
                                         control={form.control}
-                                        name={field} 
+                                        name="location"
                                         render={({ field }) => (
-                                             <FormItem>
-                                                  <FormLabel>{fields[(field.name)].label}</FormLabel>
+                                             <FormItem className="w-full">
+                                                  <FormLabel>Location</FormLabel>
                                                   <FormControl>
-                                                       <Input placeholder={fields[field.name].placeholder} {...field} />
+                                                       <div className={``}>
+                                                            <Select {...field} onValueChange={field.onChange} >
+                                                                 <SelectTrigger className="w-full">
+                                                                      <SelectValue placeholder="Theme" />
+                                                                 </SelectTrigger>
+                                                                 <SelectContent>
+                                                                      <SelectItem value="light">Light</SelectItem>
+                                                                      <SelectItem value="dark">Dark</SelectItem>
+                                                                      <SelectItem value="system">System</SelectItem>
+                                                                 </SelectContent>
+                                                            </Select>
+                                                       </div>
                                                   </FormControl>
                                                   <FormMessage />
                                              </FormItem>
                                         )}
                                    />
-                                   ))
-                                   }
-                                   <Button type="submit">Submit</Button>
+
+                                   {/* DATE */}
+                                   <FormField
+                                        control={form.control}
+                                        name="date"
+                                        render={({ field }) => (
+                                             <FormItem className="w-full">
+                                                  <FormLabel>Date</FormLabel>
+                                                  <FormControl>
+                                                       <div className={``} onChange={field.onChange} >
+                                                            <Popover {...field} >
+                                                                 <PopoverTrigger asChild>
+                                                                      <Button
+                                                                           variant={"outline"}
+                                                                           className={cn(
+                                                                                "w-full justify-start text-left font-normal",
+                                                                                !field.value && "text-muted-foreground"
+                                                                           )}
+                                                                      >
+                                                                           <CalendarIcon className="mr-2 h-4 w-4" />
+                                                                           {field.value ? format(field.value , "PPP") : <span>Choose a date</span>}
+                                                                      </Button>
+                                                                 </PopoverTrigger>
+                                                                 <PopoverContent className="w-auto p-0">
+                                                                      <Calendar
+                                                                           mode="single"
+                                                                           selected={field.value}
+                                                                           onSelect={field.onChange}
+                                                                           initialFocus
+                                                                      />
+                                                                 </PopoverContent>
+                                                            </Popover>
+                                                       </div>
+                                                  </FormControl>
+                                                  <FormMessage />
+                                             </FormItem>
+                                        )}
+                                   />
+
+                                   {/* TIME */}
+                                   <FormField
+                                        control={form.control}
+                                        name="time"
+                                        render={({ field }) => (
+                                             <FormItem className="w-full">
+                                                  <FormLabel>Time</FormLabel>
+                                                  <FormControl>
+                                                       <div className={``}>
+                                                            <Select {...field} onValueChange={field.onChange} >
+                                                                 <SelectTrigger className="w-full">
+                                                                      <SelectValue placeholder="Theme" />
+                                                                 </SelectTrigger>
+                                                                 <SelectContent>
+                                                                      <SelectItem value="light">Light</SelectItem>
+                                                                      <SelectItem value="dark">Dark</SelectItem>
+                                                                      <SelectItem value="system">System</SelectItem>
+                                                                 </SelectContent>
+                                                            </Select>
+                                                       </div>
+                                                  </FormControl>
+                                                  <FormMessage />
+                                             </FormItem>
+                                        )}
+                                   />
+
+                                   {/* DURATION */}
+                                   <FormField
+                                        control={form.control}
+                                        name="duration"
+                                        render={({ field }) => (
+                                             <FormItem className="w-full">
+                                                  <FormLabel>Duration</FormLabel>
+                                                  <FormControl>
+                                                       <div className={``}>
+                                                            <Select {...field} onValueChange={field.onChange} >
+                                                                 <SelectTrigger className="w-full">
+                                                                      <SelectValue placeholder="Theme" />
+                                                                 </SelectTrigger>
+                                                                 <SelectContent>
+                                                                      <SelectItem value="light">Light</SelectItem>
+                                                                      <SelectItem value="dark">Dark</SelectItem>
+                                                                      <SelectItem value="system">System</SelectItem>
+                                                                 </SelectContent>
+                                                            </Select>
+                                                       </div>
+                                                  </FormControl>
+                                                  <FormMessage />
+                                             </FormItem>
+                                        )}
+                                   />
+
+                                   <Button className="w-full" type="submit" >Booking now</Button>
                               </form>
                          </Form>
                     </div>
