@@ -7,7 +7,7 @@ export function Backgound() {
      return (
           <>
                <div
-                    className="absolute top-0 w-fit h-fit overflow-hidden"
+                    className="absolute top-0 left-0 w-fit h-fit overflow-hidden"
                >
                     <motion.div
                          animate={{
