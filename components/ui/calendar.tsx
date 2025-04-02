@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "lucide-react"
 import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
@@ -59,13 +59,16 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
+      // components={{
+      //   IconLeft: ({ className, ...props }) => (
+      //     <ChevronLeft className={cn("size-4", className)} {...props} />
+      //   ),
+      //   IconRight: ({ className, ...props }) => (
+      //     <ChevronRight className={cn("size-4", className)} {...props} />
+      //   ),
+      // }}
       components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("size-4", className)} {...props} />
-        ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("size-4", className)} {...props} />
-        ),
+        Chevron: ({ ...props }) => <Chevron {...props} />,
       }}
       {...props}
     />
@@ -73,3 +76,18 @@ function Calendar({
 }
 
 export { Calendar }
+
+function Chevron({ orientation = "left" }) {
+  switch (orientation) {
+    case "left":
+      return <ChevronLeftIcon className="h-4 w-4" />;
+    case "right":
+      return <ChevronRightIcon className="h-4 w-4" />;
+    case "up":
+      return <ChevronUpIcon className="h-4 w-4" />;
+    case "down":
+      return <ChevronDownIcon className="h-4 w-4" />;
+    default:
+      return null;
+  }
+}
