@@ -7,15 +7,25 @@ export function Backgound() {
      return (
           <>
                <div
-                    className="absolute top-0 left-0 w-fit h-fit overflow-hidden"
+                    className="absolute top-0 left-0 w-dvw h-dvh overflow-hidden"
                >
                     <motion.div
                          animate={{
                               scale: 1.2,
                               transition: { duration: 10 }
                          }}
+                         className="absolute w-full h-full"
                     >
-                         <Image src={background.src} className="z-0 w-dvw " width={`${500}`} height={background.height} alt="" />
+                         <Image 
+                         src={background.src} 
+                         className="z-0 w-full h-full" 
+                         // width={`${background.width}`} height={background.height} 
+                         objectFit="cover"
+                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+
+                         fill={true}
+                         alt="" 
+                         />
                     </motion.div>
                </div>
 

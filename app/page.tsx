@@ -8,8 +8,7 @@ export default function Home() {
     <div className="overflow-hidden h-full font-display">
 
       <main className="relative h-dvh flex flex-col gap-[32px] ">
-        <div className="h-fit flex xl:flex-row flex-col  w-full gap-10 pt-[14rem] p-12">
-          <Backgound />
+        <div className="h-dvh flex xl:flex-row flex-col  w-full gap-10 pt-[14rem] p-12">
           <div className="z-1 flex-2 text-xl w-fit h-hit">
             <ol className="flex flex-col xl:gap-10 lg:gap-6 gap-4">
               <li className={`w-fit bg-green-100 text-sm text-green-900 rounded-md`}>
@@ -26,15 +25,19 @@ export default function Home() {
               </li>
             </ol>
           </div>
-          <div className="flex-1 relative xl:w-[500px] lg:w-[400px] w-full h-fit">
-            {/* <HomeBookingForm>
+          <Backgound />
+
+        </div>
+        <div>
+          <h1>Court here</h1>
+        </div>
+        <div className="flex-1 relative xl:w-[500px] lg:w-[400px] w-full h-fit">
+          {/* <HomeBookingForm>
 
             </HomeBookingForm> */}
-          </div>
         </div>
 
       </main>
-
       <FooterWithSocialLinks></FooterWithSocialLinks>
     </div>
   );
