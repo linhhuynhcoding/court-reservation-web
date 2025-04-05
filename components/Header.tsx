@@ -21,9 +21,9 @@ export default function Header(): JSX.Element {
 
      return <>
           <header className={`p-12 w-dvw z-1 absolute`}>
-               <nav className={`p-2 min-h-10  rounded-xl border-solid border-gray-300 border-1 shadow-xl ${'bg-white'} `}>
+               <nav className={`p-2 min-h-10 rounded-xl border-solid border-gray-300 border-1 shadow-xl ${'bg-white'} `}>
                     <ul className="pl-0 flex justify-center items-center xl:gap-8">
-                         <li className=" md:order-1 min-h-10 flex-1 flex items-center transition delay-150 duration-300 ease-in-out hover:scale-105">
+                         <li className="min-h-10 flex-1 flex items-center transition delay-150 duration-300 ease-in-out hover:scale-105">
                               <Link href="/" className="">
                                    <div className="pl-4 pr-10 h-max">
                                         <Image src={logo.src} className="size-auto" width="100" height="100" alt="" priority />
@@ -34,16 +34,16 @@ export default function Header(): JSX.Element {
                               <div className="xl:hidden block items-center pl-4 text-2xl text-sky-600">
                                    <GiHamburgerMenu />
                               </div>
-                              <div className="xl:flex hidden flex-1 flex justify-center items-center gap-8">
+                              <ol className="xl:flex hidden flex-1 flex justify-center items-center gap-8">
                                    <NavLink hrefs={HREFS}></NavLink>
-                              </div>
+                              </ol>
                          </li>
-                         <li className="md:order-3 p-2 pl-10 min-h-10 flex-1 flex justify-end gap-2 ">
+                         <li className="order-last p-2 pl-10 min-h-10 flex-1 flex justify-end gap-2 ">
                               <Button className="hover:border-b-1  " variant={`secondary`} asChild>
-                                   <Link href="/login">Sign In</Link>
+                                   <Link href="/auth/login">Sign In</Link>
                               </Button>
                               <Button className={`hover:border-b-1`} asChild>
-                                   <Link href="/register">Join with us</Link>
+                                   <Link href="/auth/register">Join with us</Link>
                               </Button>
                          </li>
                     </ul>

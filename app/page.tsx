@@ -1,5 +1,4 @@
 import { Backgound } from "@/components/Backgound";
-import { FooterWithSocialLinks } from "@/components/FooterWithSocialLinks";
 // import { HomeBookingForm } from "@/components/HomeBookingForm";
 
 
@@ -38,7 +37,6 @@ export default function Home() {
         </div>
 
       </main>
-      <FooterWithSocialLinks></FooterWithSocialLinks>
     </div>
   );
 }
