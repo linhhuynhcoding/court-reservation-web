@@ -5,7 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 // Import Components 
 import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/src/components/ui/button"
 import NavLink from "./NavLink";
 
 // const GLASS_MORPHISM_TAILWIND = "h-full w-full bg-white-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-20 border border-gray-100";
@@ -20,7 +20,7 @@ const HREFS = [
 export default function Header(): JSX.Element {
 
      return <>
-          <header className={`p-12 w-dvw z-1 absolute`}>
+          <header className={`p-12 w-dvw z-10 absolute`}>
                <nav className={`p-2 min-h-10 rounded-xl border-solid border-gray-300 border-1 shadow-xl ${'bg-white'} `}>
                     <ul className="pl-0 flex justify-center items-center xl:gap-8">
                          <li className="min-h-10 flex-1 flex items-center transition delay-150 duration-300 ease-in-out hover:scale-105">

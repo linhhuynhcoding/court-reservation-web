@@ -1,4 +1,4 @@
-import { Backgound } from "@/components/Backgound";
+import { Backgound } from "@/src/components/Backgound";
 // import { HomeBookingForm } from "@/components/HomeBookingForm";
 
 

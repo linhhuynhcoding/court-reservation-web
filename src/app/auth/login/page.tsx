@@ -1,4 +1,4 @@
-import { FormLogin } from "@/components/FormLogin";
+import { FormLogin } from "@/src/components/FormLogin";
 
 export default function Login() {
      return <>
