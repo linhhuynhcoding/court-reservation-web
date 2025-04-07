@@ -18,7 +18,6 @@ const HREFS = [
 ];
 
 export default function Header(): JSX.Element {
-
      return <>
           <header className={`p-12 w-dvw z-10 absolute`}>
                <nav className={`p-2 min-h-10 rounded-xl border-solid border-gray-300 border-1 shadow-xl ${'bg-white'} `}>
@@ -38,12 +37,12 @@ export default function Header(): JSX.Element {
                                    <NavLink hrefs={HREFS}></NavLink>
                               </ol>
                          </li>
-                         <li className="order-last p-2 pl-10 min-h-10 flex-1 flex justify-end gap-2 ">
+                         <li className="sm:flex order-last p-2 pl-10 min-h-10 flex-1 flex justify-end gap-2 hidden">
                               <Button className="hover:border-b-1  " variant={`secondary`} asChild>
-                                   <Link href="/auth/login">Sign In</Link>
+                                   <Link href="/login">Sign In</Link>
                               </Button>
                               <Button className={`hover:border-b-1`} asChild>
-                                   <Link href="/auth/register">Join with us</Link>
+                                   <Link href="/register">Join with us</Link>
                               </Button>
                          </li>
                     </ul>

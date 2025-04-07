@@ -3,16 +3,22 @@ import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { z } from "zod";
-import { LoginValidation } from "../validations/LoginValidation";
+import { LoginBody, LoginBodyType } from "@/src/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "./ui/button";
 import React, { useRef } from "react";
 import Link from "next/link";
 import { motion } from "motion/react"
+import authApi from "../apis/auth";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from 'next/navigation'
+import { handleErrorApi } from "../lib/utils";
+import { toast } from "sonner";
 
 export function FormLogin() {
-  const form = useForm<z.infer<typeof LoginValidation>>({
-    resolver: zodResolver(LoginValidation),
+  const router = useRouter();
+  const form = useForm<LoginBodyType>({
+    resolver: zodResolver(LoginBody),
     defaultValues: {
       username: "",
       password: "",
@@ -21,10 +27,30 @@ export function FormLogin() {
 
   const passwordField = useRef<HTMLInputElement>(null);
 
-  function onSubmit(values: z.infer<typeof LoginValidation>) {
+  async function onSubmit(values: LoginBodyType) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log("values: ", values);
+
+    try {
+      const response = await authApi.clogin(values);
+      console.log(response);
+      toast.success("Login successfully!");
+      setTimeout(() => { }, 2000);
+
+      router.push("/");
+    }
+    catch (e) {
+      console.log(e);
+      handleErrorApi({
+        error: e,
+        setError: form.setError,
+        duration: 2000
+      }
+      );
+    }
+
+
   }
 
 
@@ -33,7 +59,7 @@ export function FormLogin() {
     <motion.div
       initial={{ opacity: 0, scale: 0.8, z: -100, rotateX: -30, y: 100 }}
       animate={{ opacity: 1, scale: 1, z: 0, rotateX: 0, y: 0 }}
-      transition={{ duration: 1, ease: "easeInOut"}}
+      transition={{ duration: 1, ease: "easeInOut" }}
       style={
         {
           transformStyle: "preserve-3d",
@@ -45,8 +71,7 @@ export function FormLogin() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}
           className={`flex flex-col p-8 rounded-4xl gap-4 border-2 border-sky-600 
-                justify-center justify-items-center bg-white
-                w-140 shadow-2xl shadow-sky-900/50 text-sky-950`}
+                justify-center justify-items-center bg-white sm:w-140 w-100 shadow-2xl shadow-sky-900/50 text-sky-950`}
         >
           <div className="text-center text-4xl font-bold text-primary">
             <h1>LOGIN</h1>
@@ -80,7 +105,7 @@ export function FormLogin() {
                 <FormItem className="w-full">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} ref={(e: HTMLInputElement) => {
+                    <Input type="password" {...field} ref={(e: HTMLInputElement) => {
                       field.ref(e);
                       if (e) {
                         passwordField.current = e;
