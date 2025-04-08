@@ -1,3 +1,5 @@
+"use client";
+
 import { JSX } from "react"
 import logo from '@/assets/logotitle.png'
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -7,6 +9,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/src/components/ui/button"
 import NavLink from "./NavLink";
+import { AccountType } from "../schemas/account.schema";
+import { usePathname } from "next/navigation";
+import { useAppContext } from "./app-provider";
 
 // const GLASS_MORPHISM_TAILWIND = "h-full w-full bg-white-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-20 border border-gray-100";
 
@@ -17,34 +22,60 @@ const HREFS = [
      { name: "Contact", href: "/2" },
 ];
 
-export default function Header(): JSX.Element {
+const ADMIN_STYLES = `p-0`
+
+export default function Header({ }): JSX.Element {
+     const { account } = useAppContext();
+     const pathname = usePathname();
+     const isAdmin = pathname.startsWith('/admin');
+     console.log("account: ", account);
+
      return <>
-          <header className={`p-12 w-dvw z-10 absolute`}>
-               <nav className={`p-2 min-h-10 rounded-xl border-solid border-gray-300 border-1 shadow-xl ${'bg-white'} `}>
+          <header className={`${isAdmin ? ADMIN_STYLES : `p-8 absolute`}  w-dvw z-10 `}>
+               <nav className={`${isAdmin ? ADMIN_STYLES : `rounded-xl`} p-2 min-h-8  border-solid border-gray-300 border-1 shadow-xl ${'bg-white'} `}>
                     <ul className="pl-0 flex justify-center items-center xl:gap-8">
-                         <li className="min-h-10 flex-1 flex items-center transition delay-150 duration-300 ease-in-out hover:scale-105">
+                         <li className="min-h-10 flex-1 flex items-center ">
                               <Link href="/" className="">
                                    <div className="pl-4 pr-10 h-max">
-                                        <Image src={logo.src} className="size-auto" width="100" height="100" alt="" priority />
+                                        <Image src={logo.src} className="size-auto" width="80" height="80" alt="" priority />
                                    </div>
                               </Link>
                          </li>
-                         <li className="xl:order-2 order-first justify-self-stretch">
-                              <div className="xl:hidden block items-center pl-4 text-2xl text-sky-600">
-                                   <GiHamburgerMenu />
-                              </div>
-                              <ol className="xl:flex hidden flex-1 flex justify-center items-center gap-8">
-                                   <NavLink hrefs={HREFS}></NavLink>
-                              </ol>
+                         {
+                              isAdmin ? null
+                                   :
+                                   <li className="xl:order-2 order-first justify-self-stretch">
+                                        <div className="xl:hidden block items-center pl-4 text-2xl text-sky-600">
+                                             <GiHamburgerMenu />
+                                        </div>
+                                        <ol className="xl:flex hidden flex-1 flex justify-center items-center gap-8">
+                                             <NavLink hrefs={HREFS} style="font-light"></NavLink>
+                                        </ol>
+                                   </li>
+
+                         }
+
+                         <li className="md:flex order-last p-2 pl-10 min-h-10 flex-1 flex justify-end gap-2 hidden">
+                              {
+                                   account
+                                        ? <>
+                                             <Button className={`hover:border-b-1`} asChild>
+                                                  <Link href="/me">Hi, <i><strong>{account.username}</strong>!</i></Link>
+                                             </Button>
+                                        </>
+                                        : <>
+                                             <Button className="hover:border-b-1  " variant={`secondary`} asChild>
+                                                  <Link href="/login">Sign In</Link>
+                                             </Button>
+                                             <Button className={`hover:border-b-1`} asChild>
+                                                  <Link href="/register">Join with us</Link>
+                                             </Button>
+                                        </>
+                              }
                          </li>
-                         <li className="sm:flex order-last p-2 pl-10 min-h-10 flex-1 flex justify-end gap-2 hidden">
-                              <Button className="hover:border-b-1  " variant={`secondary`} asChild>
-                                   <Link href="/login">Sign In</Link>
-                              </Button>
-                              <Button className={`hover:border-b-1`} asChild>
-                                   <Link href="/register">Join with us</Link>
-                              </Button>
-                         </li>
+
+
+
                     </ul>
                </nav>
           </header>

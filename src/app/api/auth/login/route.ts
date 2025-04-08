@@ -13,7 +13,9 @@ export async function POST(request: Request) {
     return Response.json(response, {
       status: 200,
       headers: {
-        "Set-Cookie": `access_token=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Secure; Max-Age=3600`,
+        // "Set-Cookie": `access_token=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Secure; Max-Age=3600`,
+        "Set-Cookie": `access_token=${accessToken}; Path=/; Max-Age=3600`,
+
         "Content-Type": "application/json",
       },
     })

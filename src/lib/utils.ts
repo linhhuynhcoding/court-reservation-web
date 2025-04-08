@@ -2,8 +2,9 @@ import { clsx, type ClassValue } from "clsx"
 import { UseFormSetError } from "react-hook-form"
 import { twMerge } from "tailwind-merge"
 import { GlobarError, HttpError, ValidationError } from "./http"
-import GlobalError from "next/dist/client/components/error-boundary"
+import jwt from "jsonwebtoken"
 import { toast } from "sonner"
+import { TokenPayload } from "../constants/types"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -64,4 +65,8 @@ export const removeTokensFromLocalStorage = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
   }
+};
+
+export const decodeToken = (token: string) => {
+  return jwt.decode(token) as TokenPayload;
 };

@@ -68,7 +68,7 @@ function Calendar({
       //   ),
       // }}
       components={{
-        Chevron: ({ ...props }) => <Chevron {...props} />,
+        Chevron: ({ className, ...props }) => <Chevron {...props} />,
       }}
       {...props}
     />
@@ -77,7 +77,7 @@ function Calendar({
 
 export { Calendar }
 
-function Chevron({ orientation = "left" }) {
+function Chevron({ orientation = "left",   }) {
   switch (orientation) {
     case "left":
       return <ChevronLeftIcon className="h-4 w-4" />;

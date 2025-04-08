@@ -17,8 +17,9 @@ export function Backgound() {
                          className="absolute w-full h-full"
                     > */}
                     <Image
+                    
                          src={background.src}
-                         className="z-0 w-full h-full opacity-50"
+                         className="z-0 w-full h-full opacity-60 animate-scale "
                          // width={`${background.width}`} height={background.height} 
                          objectFit="cover"
                          quality={100}
@@ -29,8 +30,8 @@ export function Backgound() {
                     />
                     <div className="
                          w-full h-full 
-                         
-                         bg-gradient-to-b from-blue-950/0 to-blue-950
+                         bg-black
+                         // bg-gradient-to-b from-white/0 to-blue-500/50
                          ">
 
                     </div>

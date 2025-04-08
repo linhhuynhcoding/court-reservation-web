@@ -19,6 +19,8 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/src/lib/utils";
+import { useCity } from "../queries/useLocation";
+import { ProvinceResponseSchemaType } from "../schemas/location.schemas";
 
 
 const formSchema = z.object({
@@ -37,6 +39,8 @@ const formSchema = z.object({
 type FormFields = z.infer<typeof formSchema>;
 
 export function HomeBookingForm() {
+  const { data } = useCity();
+
   // 1. Define your form.
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
@@ -82,9 +86,13 @@ export function HomeBookingForm() {
                             <SelectValue placeholder="Theme" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="light">Light</SelectItem>
-                            <SelectItem value="dark">Dark</SelectItem>
-                            <SelectItem value="system">System</SelectItem>
+                            {
+                              data?.payload.data.map((city: ProvinceResponseSchemaType, index: number) => {
+                                return <SelectItem key={index} value={city?.codename}>{city.name}</SelectItem>
+                              })
+                            }
+                            {/* <SelectItem value="dark">Dark</SelectItem>
+                            <SelectItem value="system">System</SelectItem> */}
                           </SelectContent>
                         </Select>
                       </div>
@@ -102,7 +110,7 @@ export function HomeBookingForm() {
                   <FormItem className="w-full">
                     <FormLabel>Date</FormLabel>
                     <FormControl>
-                      <div className={``} onChange={field.onChange} >
+                      <div className={`w-auto`} onChange={field.onChange} >
                         <Popover {...field} >
                           <PopoverTrigger asChild>
                             <Button
@@ -116,12 +124,12 @@ export function HomeBookingForm() {
                               {field.value ? format(field.value, "PPP") : <span>Choose a date</span>}
                             </Button>
                           </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0">
+                          <PopoverContent className="w-fit flex">
                             <Calendar
+                            className="grid"
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              initialFocus
                             />
                           </PopoverContent>
                         </Popover>

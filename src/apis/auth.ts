@@ -6,18 +6,7 @@ import { ErrorResType } from "../schemas/global.schemas";
 const LOGIN_ENDPOINT = '/auth/login';
 
 const authApi = {
-
-     // Next Client to Server
-     me: () => http.get<AccountResType>('/api/auth/me', {}),
-
-
-     // Next Server to Server
-     sme: (accessToken: string) => http.get<AccountResType>('/api/auth/me', {
-          headers: {
-               Authorization: `Bearer ${accessToken}`,
-          }
-     }),
-
+     
      // Next Client to Next Server
      clogin: (body: LoginBodyType) => http.post<LoginResType>('/api/auth/login', {
           baseUrl: '',

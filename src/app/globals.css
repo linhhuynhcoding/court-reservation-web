@@ -46,6 +46,17 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-scale: bg-scale 10s infinite;
+
+  @keyframes bg-scale {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.2);
+    }
+  }
 }
 
 body {
@@ -123,6 +134,10 @@ body {
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+
+/* html {
+  font: 1em;
+} */
 
 @layer base {
   * {
