@@ -16,10 +16,10 @@ import { useAppContext } from "./app-provider";
 // const GLASS_MORPHISM_TAILWIND = "h-full w-full bg-white-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-20 border border-gray-100";
 
 const HREFS = [
-     { name: "Home", href: "/" },
-     { name: "Cuộc tình", href: "/contact" },
-     { name: "Contact", href: "/1" },
-     { name: "Contact", href: "/2" },
+     { name: "Trang chủ", href: "/" },
+     { name: "Đặt sân", href: "/court" },
+     { name: "Dụng cụ thể thao", href: "/1" },
+     { name: "Liên hệ", href: "/2" },
 ];
 
 const ADMIN_STYLES = `p-0`
@@ -65,10 +65,10 @@ export default function Header({ }): JSX.Element {
                                         </>
                                         : <>
                                              <Button className="hover:border-b-1  " variant={`secondary`} asChild>
-                                                  <Link href="/login">Sign In</Link>
+                                                  <Link href="/login">Đăng nhập</Link>
                                              </Button>
                                              <Button className={`hover:border-b-1`} asChild>
-                                                  <Link href="/register">Join with us</Link>
+                                                  <Link href="/register">Đăng ký tài khoản</Link>
                                              </Button>
                                         </>
                               }

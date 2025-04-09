@@ -7,10 +7,9 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { cn } from "@/lib/utils"; // Make sure this exists
 import CourtCart from "@/components/court-cart";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import TypoMotion from "@/components/typo-motion";
 
 
-const TEXT_GRADIENT = `bg-gradient-to-b from-amber-100 to-orange-300`
-const GROWING_TEXT_GRADIENT = `bg-gradient-to-b from-white to-amber-300`
 
 const TAG_TRIGGER_STYLE = `inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background w-fit
 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none
@@ -34,40 +33,9 @@ export default function Home() {
         <section className="h-dvh flex xl:flex-row flex-col w-full gap-10 pt-[10rem] p-12">
           <div className="z-1 flex-2 text-xl w-fit h-hit">
             <ol className="flex flex-col justify-around xl:gap-10 lg:gap-6 gap-4 h-full">
-              {/* <li className={`w-fit bg-green-100 text-sm text-green-900 rounded-md`}>
-                  <p className={`pl-4 pr-4 pt-1 pb-1 font-semibold`}>Chào mừng đến với <strong><i>PickleBanh</i></strong></p>
-                </li> */}
-              {/* <li className="italic w-fit xl:text-5xl lg:text-3xl font-medium text-gray-100 capitalize drop-shadow-lg">
-                <h1>Ta chỉ chơi Pickcleball</h1>
-              </li>
-              <li className="italic w-fit xl:text-5xl lg:text-3xl font-medium text-gray-100 capitalize drop-shadow-lg">
-                <h1>Không nên vượt mức Pickleball!</h1>
-              </li> */}
-              <h1 className="text-white text-shadow-lg text-shadow-black scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl italic">
-                Vượt mức <br />
-                <span className={`${GROWING_TEXT_GRADIENT} absolute blur-lg text-transparent bg-clip-text scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-8xl`}>
-                  Pickleball!
-                </span>
-                <span className={`${TEXT_GRADIENT} text-transparent bg-clip-text scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-8xl`}>
-                  Pickleball! &nbsp;
-                </span>
+              <TypoMotion>
 
-              </h1>
-
-              <h2 className="order-last w-fit
-              scroll-m-20 border-b-8 border-teal-400
-              bg-gradient-to-r from-teal-400 to-yellow-200
-              text-transparent bg-clip-text pb-2 text-3xl font-bold tracking-tight first:mt-0 italic">
-                <span className={`absolute 
-                  bg-gradient-to-r from-teal-400 to-yellow-200
-                  blur-lg text-transparent bg-clip-text pb-2 text-3xl font-bold tracking-tight first:mt-0 italic`}>
-                  Vượt qua mọi giới hạn!
-                </span>
-                Vượt qua mọi giới hạn! &nbsp; &nbsp;
-              </h2>
-              {/* <li className="w-fit xl:text-base lg:text-sm font-xs text-gray-100 drop-shadow-lg">
-                <p>Thiên lý ơi em có thể ở lại đây không biết chăng ngoài trời mưa giông nhiều cô đơn lắm em!</p>
-              </li> */}
+              </TypoMotion>
             </ol>
           </div>
           <Backgound />
@@ -88,12 +56,7 @@ export default function Home() {
 
               </div>
               <div className={`flex gap-1`}>
-                <button className={`${TAG_TRIGGER_STYLE} border-1 border-black`}>
-                  <FaChevronLeft />
-                </button>
-                <button className={`${TAG_TRIGGER_STYLE} border-1 border-black`}>
-                  <FaChevronRight />
-                </button>
+
               </div>
             </div>
             <div>
@@ -103,18 +66,18 @@ export default function Home() {
                     className=" h-fit ">
                     <Carousel className="relative overflow-visiable">
                       <CarouselContent className="relative overflow-visiable -ml-4 p-4">
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
-                        <CarouselItem className="pl-1 basis-1/4"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
                       </CarouselContent>
                       <CarouselPrevious />
                       <CarouselNext />
