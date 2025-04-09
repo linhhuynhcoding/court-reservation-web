@@ -1,6 +1,6 @@
-import { useAppContext } from "@/src/components/app-provider";
-import { FooterWithSocialLinks } from "@/src/components/FooterWithSocialLinks";
-import Header from "@/src/components/Header";
+import { useAppContext } from "@/components/app-provider";
+import { FooterWithSocialLinks } from "@/components/FooterWithSocialLinks";
+import Header from "@/components/Header";
 
 export default function RootLayout({
      children,

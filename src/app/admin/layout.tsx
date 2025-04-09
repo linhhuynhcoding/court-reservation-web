@@ -1,4 +1,4 @@
-import NavLink from "@/src/components/NavLink";
+import NavLink from "@/components/NavLink";
 
 const herfs = [
      { name: 'Dashboard', href: '/admin' },

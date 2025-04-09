@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 // Import Components
-import Header from "@/src/components/Header";
-import { FooterWithSocialLinks } from "@/src/components/FooterWithSocialLinks";
+import Header from "@/components/Header";
+import { FooterWithSocialLinks } from "@/components/FooterWithSocialLinks";
 import { QueryProvider } from "../components/QueryProvider";
 import { Toaster } from "@/components/ui/sonner"
 import { AccountResType, AccountType } from "../schemas/account.schema";

@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { LoginBody, LoginBodyType } from "@/src/schemas/auth.schema";
+import { LoginBody, LoginBodyType } from "@/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "./ui/button";
 import React, { useRef } from "react";

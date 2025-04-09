@@ -1,4 +1,4 @@
-import { Backgound } from "@/src/components/Backgound";
+import { Backgound } from "@/components/Backgound";
 
 export default function Layout({
      children,

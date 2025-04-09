@@ -7,7 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 // Import Components 
 import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/src/components/ui/button"
+import { Button } from "@/components/ui/button"
 import NavLink from "./NavLink";
 import { AccountType } from "../schemas/account.schema";
 import { usePathname } from "next/navigation";

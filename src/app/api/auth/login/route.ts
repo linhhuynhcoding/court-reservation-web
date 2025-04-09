@@ -1,5 +1,5 @@
-import authApi from "@/src/apis/auth";
-import { HttpError } from "@/src/lib/http";
+import authApi from "@/apis/auth";
+import { HttpError } from "@/lib/http";
 
 export async function POST(request: Request) {
   const body = await request.json();
