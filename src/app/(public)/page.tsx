@@ -66,7 +66,7 @@ export default function Home() {
                     className=" h-fit ">
                     <Carousel className="relative overflow-visiable">
                       <CarouselContent className="relative overflow-visiable -ml-4 p-4">
-                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart image="https://placehold.co/600x400/png"></CourtCart></CarouselItem>
+                        <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
                         <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
                         <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
                         <CarouselItem className="pl-1 2xl:basis-1/5 xl:basis-1/4 md:basis-1/3 2lg:basis-1/2"><CourtCart></CourtCart></CarouselItem>
