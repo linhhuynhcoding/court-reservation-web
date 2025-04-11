@@ -8,8 +8,11 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
      const [queryClient] = useState(() => new QueryClient({
           defaultOptions: {
                queries: {
-                    staleTime: Infinity
+                    staleTime: Infinity,
+                    refetchOnWindowFocus: false,
+                    refetchOnMount: false,
                },
+               
           },
      }));
      return (

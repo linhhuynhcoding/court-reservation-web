@@ -70,3 +70,16 @@ export const removeTokensFromLocalStorage = () => {
 export const decodeToken = (token: string) => {
   return jwt.decode(token) as TokenPayload;
 };
+
+export function toQueryString(params: Record<string, unknown>): string {
+  const query = new URLSearchParams();
+
+  for (const key in params) {
+    const value = params[key];
+    if (value !== undefined && value !== null) {
+      query.append(key, String(value));
+    }
+  }
+
+  return `?${query.toString()}`;
+}

@@ -30,7 +30,7 @@ export function FormLogin() {
   async function onSubmit(values: LoginBodyType) {
 
     try {
-      loginMutation.mutateAsync(values);
+      await loginMutation.mutateAsync(values);
 
       toast.success("Login successfully!");
       setTimeout(() => { }, 2000);
@@ -44,8 +44,6 @@ export function FormLogin() {
         duration: 2000
       });
     }
-
-
   }
 
   return (
@@ -57,7 +55,6 @@ export function FormLogin() {
         {
           transformStyle: "preserve-3d",
           transformPerspective: 800, // tạo chiều sâu
-
         }
       }
     >

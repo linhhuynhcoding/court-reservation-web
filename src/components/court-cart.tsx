@@ -3,11 +3,29 @@
 import Image from "next/image";
 import { FaClock, FaLocationArrow, FaRegCalendarAlt, FaRegClock } from "react-icons/fa";
 import sample from "@/assets/sample.webp"
+import { OrgaResponse } from "@/schemas/court.schemas";
 
 const SAMPLE_IMAGE = sample.src;
 // const SAMPLE_IMAGE = 'https://placehold.co/600x400/png';
 
-function CourtCart() {
+function CourtCart({orga = {
+     name: "Sân Cuộc tình dĩ vãng",
+     price: 24.000,
+     address: {
+          id: 0,
+          addressLine: "",
+          city: "Tp Hồ Chí Minh",
+          district: "",
+          ward: "",
+          latitude: 0,
+          longitude: 0,
+     },
+     courts: [],
+     numberOfCourts: 0,
+     phone: "",
+     status: "",
+     id: 0
+}}: {orga?: OrgaResponse}) {
      return (
           <div className={`relative bg-white flex flex-col justify-self-stretch border border-xs border-gray-200
  md:w-2xs w-full  p-3 rounded-md gap-2 max-h-[500px] hover:cursor-pointer`}>
@@ -18,11 +36,11 @@ function CourtCart() {
 
                <div className="flex flex-col gap-2">
                     <h3 className="font-semibold tracking-wide lg:text-xl">
-                         Sân Cuộc tình dĩ vãng
+                         {orga.name}
                     </h3>
                     <span className="flex text-xs font-semibold items-center gap-2 content-self-end">
                          <FaLocationArrow />
-                         Tp. Hồ Chí Minh
+                         {orga.address?.city}
                     </span>
                     <p className="text-gray-500 text-xs font-medium tracking-wide text-pretty">
                          Đây là sân chỉ dùng để làm bãi giữ xe...
@@ -38,7 +56,7 @@ function CourtCart() {
                     </div>
                     <div className="flex items-end">
                          <h2 className="font-bold tracking-wide lg:text-4xl text-primary">
-                              <span>đ</span>24.000
+                              <span>đ</span>{orga.price}
                          </h2>
                          <span className="font-semibold">1 giờ</span>
                     </div>

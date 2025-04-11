@@ -1,10 +1,12 @@
 import cover from "@/assets/cover.jpg";
-import CourtCart from "@/components/court-cart";
 import Image from "next/image";
+import { CourtView } from "./court-view";
+
+
 
 function CourtPage() {
      return (
-          <div className="w-full bg-slate-50">
+          <div className="w-full h-fit bg-slate-50 pb-10">
                <div className="relative hidden w-full justify-center lg:flex">
                     <div className="relative h-[600px] w-full">
                          <span className="absolute w-full h-full" >
@@ -69,16 +71,10 @@ function CourtPage() {
                          </div>
                     </div>
                </div>
-               <div className="md:w-fit w-full pt-[10rem] bg-white h-auto justify-self-center rounded-xl m-10 p-2 gap-4 justify-center">
-                    <div className="grid md:grid-cols-3 grid-cols-1 gap-4 p-4 justify-around">
-                         <CourtCart></CourtCart>
-                         <CourtCart></CourtCart>
-                         <CourtCart></CourtCart>
-                         <CourtCart></CourtCart>
-                         <CourtCart></CourtCart>
-                         <CourtCart></CourtCart>
-                         <CourtCart></CourtCart>
-                    </div>
+               <div className="md:w-fit md:min-w-[1000px] w-full pt-[10rem] bg-white h-auto justify-self-center rounded-xl m-10 p-2 pb-5 gap-4 justify-center">
+                    <CourtView >
+
+                    </CourtView>
                </div>
           </div>
      );

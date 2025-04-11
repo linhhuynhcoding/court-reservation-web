@@ -1,21 +1,14 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { decodeToken, getAccessTokenFromLocalStorage } from "../lib/utils";
+import { decodeToken, getAccessTokenFromLocalStorage, handleErrorApi } from "../lib/utils";
 import { RoleType } from "../constants/types";
 import { AccountResType, AccountType } from "../schemas/account.schema";
 import authApi from "../apis/auth";
 import accountApi from "../apis/account";
 import { QueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
-export const queryClient = new QueryClient({
-     defaultOptions: {
-       queries: {
-         refetchOnWindowFocus: false,
-         refetchOnMount: false,
-       },
-     },
-   });
 
 const AppContext = createContext<{
      isAuth: boolean;
@@ -39,17 +32,14 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
      useEffect(() => {
           const accessToken = getAccessTokenFromLocalStorage();
           if (accessToken) {
-               try {
-                    const fetchAccount = async () => await accountApi.sme(accessToken);
-                    
-                    fetchAccount().then(({ payload }) => {
-                         const _account = (payload?.data as AccountType);
-                         setUserState(_account);
-                    });
-               }
-               catch (e) {
-                    console.log(e);
-               }
+               const fetchAccount = async () => await accountApi.sme(accessToken);
+
+               fetchAccount().then(({ payload }) => {
+                    const _account = (payload?.data as AccountType);
+                    setUserState(_account);
+               }).catch(e => {
+                    handleErrorApi({ error: "Lỗi server!" })
+               });
           }
      }, []);
 
