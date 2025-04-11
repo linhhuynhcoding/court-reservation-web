@@ -18,8 +18,8 @@ import { useAppContext } from "./app-provider";
 const HREFS = [
      { name: "Trang chủ", href: "/" },
      { name: "Đặt sân", href: "/court" },
-     { name: "Dụng cụ thể thao", href: "/1" },
-     { name: "Liên hệ", href: "/2" },
+     { name: "Dụng cụ thể thao", href: "/product" },
+     { name: "Liên hệ", href: "/contact" },
 ];
 
 const ADMIN_STYLES = `p-0`
@@ -28,11 +28,12 @@ export default function Header({ }): JSX.Element {
      const { account } = useAppContext();
      const pathname = usePathname();
      const isAdmin = pathname.startsWith('/admin');
+     const isHome = pathname === '/' || pathname === '/' || pathname.startsWith('/auth');
      console.log("account: ", account);
 
      return <>
-          <header className={`${isAdmin ? ADMIN_STYLES : `p-8 absolute`}  w-dvw z-10 `}>
-               <nav className={`${isAdmin ? ADMIN_STYLES : `rounded-xl`} p-2 min-h-8  border-solid border-gray-300 border-1 shadow-xl ${'bg-white'} `}>
+          <header className={`${!isHome ? ADMIN_STYLES : `p-8 absolute`}  w-dvw z-10 `}>
+               <nav className={`${!isHome ? ADMIN_STYLES : `rounded-xl`} p-2 min-h-8  border-solid border-gray-300 border-1 shadow-sm ${'bg-white'} `}>
                     <ul className="pl-0 flex justify-center items-center xl:gap-8">
                          <li className="min-h-10 flex-1 flex items-center ">
                               <Link href="/" className="">
@@ -73,9 +74,6 @@ export default function Header({ }): JSX.Element {
                                         </>
                               }
                          </li>
-
-
-
                     </ul>
                </nav>
           </header>
