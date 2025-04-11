@@ -56,7 +56,7 @@ function CourtCart({orga = {
                     </div>
                     <div className="flex items-end">
                          <h2 className="font-bold tracking-wide lg:text-4xl text-primary">
-                              <span>đ</span>{orga.price}
+                              <span>đ</span>{orga.price?.toLocaleString('vi')}
                          </h2>
                          <span className="font-semibold">1 giờ</span>
                     </div>
