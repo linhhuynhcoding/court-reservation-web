@@ -11,6 +11,7 @@ import authApi from "../apis/auth";
 import { cookies } from "next/headers";
 import { handleErrorApi } from "../lib/utils";
 import { AppProvider } from "../components/app-provider";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -30,13 +31,14 @@ export default async function RootLayout({
           data-gr-ext-installed=""
           className="text-sm"
         >
-          <AppProvider>
-            <QueryProvider>
-              <Header />
-              {children}
-            </QueryProvider>
-          </AppProvider>
-
+          <ThemeProvider>
+            <AppProvider>
+              <QueryProvider>
+                <Header />
+                {children}
+              </QueryProvider>
+            </AppProvider>
+          </ThemeProvider>
           <Toaster position="bottom-left" richColors />
         </body>
       </html>
