@@ -12,8 +12,8 @@ const AddressResponseSchema = z.object({
      district: z.string().nullable(),
      ward: z.string().nullable(),
      addressLine: z.string().nullable(),
-     latitude: z.number().nullable(),
-     longitude: z.number().nullable(),
+     latitude: z.number().nullable().default(0),
+     longitude: z.number().nullable().default(0),
 });
 
 export const OrgaResponseSchema = z.object({
@@ -33,11 +33,11 @@ export const CreateCourtPayloadSchema = z.object({
      phone: z.string()
           .regex(/^[0-9]{10,11}$/)
           ,
-     numberOfCourts: z.number().int(),
+     numberOfCourts: z.coerce.number().int(),
      courtNames: z.array(z.string()),
-     price: z.number().min(1000),
+     price: z.coerce.number().min(1000),
      address: CreateAddressPayload,
-     imageCourts: z.array(ImagePayload).min(3).max(5)
+     imageCourts: z.array(ImagePayload).min(3).max(5).optional()
 });
 
 export type OrgaResponse = z.infer<typeof OrgaResponseSchema>;

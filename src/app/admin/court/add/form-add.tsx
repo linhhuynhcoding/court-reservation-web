@@ -17,28 +17,79 @@ import { Controller, useForm } from "react-hook-form"
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import imgApi from "@/apis/image";
+import { FormMessage } from "@/components/ui/form";
+import { useUploadImageMutation } from "@/queries/useMedia";
+import { useUploadCourtMutation } from "@/queries/useCourt";
+import { toast } from "sonner";
 
+// TODO: HANDLE FORM ERRORS
 export default function FormAddCourt() {
-     const [cityCode, setCityCode] = useState(0);
-     const [districtCode, setDistrictCode] = useState(0);
      const [files, setFiles] = useState<FileList>()
+     const useUploadCourtImgMutation = useUploadImageMutation();
+     const useCreateCourtMutation = useUploadCourtMutation();
 
      const {
           register,
           handleSubmit,
           getValues,
           watch,
+          formState: { errors },
           control
      } = useForm<CreateCourtPayload>({
-          resolver: zodResolver(CreateCourtPayloadSchema)
+          resolver: zodResolver(CreateCourtPayloadSchema),
+          defaultValues: {
+               address: {
+                    longitude: 0,
+                    latitude: 0
+               },
+               courtNames: [],
+          },
      })
 
      const { data: cityData, isLoading: cityLoading } = useCity();
      const { data: districtData, isLoading: districtLoading } = useDistrict(Number(watch("address.city")));
      const { data: wardData, isLoading: wardLoading } = useWard(Number(watch("address.district")));
 
+     async function handleSubmitForm(values: CreateCourtPayload) {
+          console.log("payload: ", values)
+          try {
+               let body = values;
+
+               if (files) {
+
+                    const formData = new FormData();
+
+                    Array.from(files).forEach((file) => {
+                         formData.append("images", file as Blob);
+                    })
+                    const updateImagesResponse = await useUploadCourtImgMutation.mutateAsync(formData);
+                    const data = updateImagesResponse.payload.data
+                    body = {
+                         ...body,
+                         imageCourts: { ...data }
+                    }
+               }
+
+               const uploadCourtResponse = await useCreateCourtMutation.mutateAsync(body);
+               
+               console.log(uploadCourtResponse);
+
+               toast.success("Tạo sân thành công!");
+
+               setTimeout(()=> {}, 2000);
+          }
+          catch (e) {
+               console.log(e);
+          }
+     }
+
+     useEffect(() => {
+          console.log(errors)
+     }, [errors])
+
      return (
-          <form action="" className="flex flex-col gap-8">
+          <form onSubmit={handleSubmit(handleSubmitForm)} className="flex flex-col gap-8">
                <div className="flex flex-col gap-4">
                     <div className="pb-6 border-b">
                          <h2 className="text-2xl font-semibold">Thông tin cơ bản</h2>
@@ -46,19 +97,19 @@ export default function FormAddCourt() {
                     <div className="flex gap-6 justify-stretch justify-items-stretch">
                          <div className="flex flex-col gap-1">
                               <Label className="font-normal">Tên sân</Label>
-                              <Input className="w-[200px]" ></Input>
+                              <Input {...register("name")} className="w-[200px]" ></Input>
                          </div>
                          <div className="flex flex-col gap-1">
                               <Label className="font-normal">Số điện thoại</Label>
-                              <Input type="phone"></Input>
+                              <Input {...register("phone")} type="phone"></Input>
                          </div>
                          <div className=" flex flex-col gap-1">
                               <Label className="font-normal">Số lượng sân bóng</Label>
-                              <Input className="w-[150px]" type="number"></Input>
+                              <Input {...register("numberOfCourts")} className="w-[150px]" type="number"></Input>
                          </div>
                          <div className="flex flex-col gap-1">
                               <Label className="font-normal">Giá</Label>
-                              <Input className="w-[100px]" type="number"></Input>
+                              <Input {...register("price")} className="w-[100px]" type="number"></Input>
                          </div>
                     </div>
                </div>
@@ -90,9 +141,11 @@ export default function FormAddCourt() {
                                                   }
                                              </SelectContent>
                                         </Select>
-                                   )}
 
+                                   )}
                               />
+
+
                          </div>
                          <div className="flex flex-col gap-1">
                               <Label className="font-normal">Quận / Huyện</Label>
@@ -149,7 +202,7 @@ export default function FormAddCourt() {
                               />                         </div>
                          <div className="flex flex-col gap-1">
                               <Label className="font-normal">Địa chỉ cụ thể</Label>
-                              <Input className=""></Input>
+                              <Input {...register("address.addressLine")} className=""></Input>
                          </div>
                     </div>
                </div>
@@ -180,9 +233,7 @@ export default function FormAddCourt() {
 
                     </div>
                </div>
-               <div>
-                    <Button className="pl-5 pr-5">Tạo sân</Button>
-               </div>
+               <Button type="submit" className="pl-5 pr-5">Tạo sân</Button>
           </form>
      )
 }

@@ -53,7 +53,7 @@ const request = async <Response>(method: HttpMethod, url: string, options?: Cust
      const body = options?.body;
      const baseHeaders = {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
      }
 
      const baseUrl = options?.baseUrl ?? envConfig.NEXT_PUBLIC_SERVER_URL;
