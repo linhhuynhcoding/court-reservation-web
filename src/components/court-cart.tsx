@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { FaClock, FaLocationArrow, FaRegCalendarAlt, FaRegClock } from "react-icons/fa";
 import sample from "@/assets/sample.webp"
-import { OrgaResponse } from "@/schemas/court.schemas";
+import { OrgaResponse } from "@/schemas/court.schema";
 
 const SAMPLE_IMAGE = sample.src;
 // const SAMPLE_IMAGE = 'https://placehold.co/600x400/png';

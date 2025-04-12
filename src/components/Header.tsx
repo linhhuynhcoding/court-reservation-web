@@ -22,13 +22,15 @@ const HREFS = [
      { name: "Liên hệ", href: "/contact" },
 ];
 
-const ADMIN_STYLES = `p-0`
+const ADMIN_STYLES = `p-0`;
+
+const HOME_PATHS = ['', '/', '/login', '/register'];
 
 export default function Header({ }): JSX.Element {
      const { account } = useAppContext();
      const pathname = usePathname();
      const isAdmin = pathname.startsWith('/admin');
-     const isHome = pathname === '/' || pathname === '/' || pathname.startsWith('/auth');
+     const isHome = HOME_PATHS.includes(pathname);
      console.log("account: ", account);
 
      return <>
@@ -37,8 +39,8 @@ export default function Header({ }): JSX.Element {
                     <ul className="pl-0 flex justify-center items-center xl:gap-8">
                          <li className="min-h-10 flex-1 flex items-center ">
                               <Link href="/" className="">
-                                   <div className="pl-4 pr-10 h-max">
-                                        <Image src={logo.src} className="size-auto" width="80" height="80" alt="" priority />
+                                   <div className="pl-6 pr-10 h-max">
+                                        <Image src={logo.src} className="size-auto" width="100" height="100" alt="" priority />
                                    </div>
                               </Link>
                          </li>

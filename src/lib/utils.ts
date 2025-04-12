@@ -83,3 +83,6 @@ export function toQueryString(params: Record<string, unknown>): string {
 
   return `?${query.toString()}`;
 }
+
+export const range = (start: number, end: number) =>
+  Array.from({ length: end - start }, (_, i) => start + i)

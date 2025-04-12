@@ -1,51 +1,34 @@
-import ProductCart from '@/components/product-cart'
-import { Pagination, PaginationContent, PaginationItem, PaginationPrevious } from '@/components/ui/pagination'
-import React from 'react'
+"use client"
+import React, { useEffect, useRef, useState } from 'react'
+import { Slider, } from '@/components/ui/slider';
+import { Input } from '@/components/ui/input';
+import ProductView from './pageview';
 
 export default function ProductPage() {
-  return (
-    <div className='flex flex-col'>
-      <div className='grid grid-cols-3 gap-8'>
-        <ProductCart />
-        <ProductCart />
-        <ProductCart />
-        <ProductCart />
-        <ProductCart />
-        <ProductCart />
-        <ProductCart />
-        <ProductCart />
-        <ProductCart />
-        <ProductCart />
-        <ProductCart />
-      </div>
-      <Pagination className="mt-10">
-        <PaginationContent>
-          <PaginationItem className="hover:cursor-pointer">
-            {/* <PaginationFirst onClick={() => handlePaging(0)} /> */}
-          </PaginationItem>
-          <PaginationItem className="hover:cursor-pointer" >
-            <PaginationPrevious  />
-          </PaginationItem>
-          {/* {
-            data?.payload?.data
-              ?
-              range(Math.max(filter.page - 2, 0), Math.min(filter.page + 2, data?.payload?.data?.totalPages - 1)).map((p, index) => {
-                return <PaginationItem key={index} className="hover:cursor-pointer">
-                  <PaginationLink onClick={() => handlePaging(p)} >{p + 1}</PaginationLink>
-                </PaginationItem>
-              })
-              : null
-          } */}
+     const [range, setRange] = useState<number[]>([0, 100])
 
-          <PaginationItem className="hover:cursor-pointer">
-            {/* <PaginationNext onClick={() => handlePaging(filter.page + 1)} /> */}
-          </PaginationItem>
-          <PaginationItem className="hover:cursor-pointer">
-            {/* <PaginationLast onClick={() => handlePaging(data?.payload?.data.totalPages - 1)} /> */}
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+     console.log(range);
 
-    </div>
-  )
+     return (
+          <div className='grid min-h-screen grid-cols-4 p-10 gap-6'>
+               <aside className='col-span-1 border-b'>
+                    <div className='border-b pb-8'>
+                         <h2 className='text-xl font-light '>BỘ LỌC</h2>
+                    </div>
+                    <div className='flex flex-col border-b pt-4 pb-6 h-fit gap-10'>
+                         <h2 className='text-lg font-semibold '>CHỌN GIÁ</h2>
+                         <div className='flex flex-col gap-4'>
+                              <Slider onValueChange={(value: number[]) => setRange(value)} defaultValue={[0, 100]} max={100} step={10} />
+                              <div className='flex gap-6'>
+                                   <Input value={(range[0] * 5000000 / 100).toLocaleString("vi")} disabled></Input>
+                                   <Input value={(range[1] * 5000000 / 100).toLocaleString("vi")} disabled></Input>
+                              </div>
+                         </div>
+                    </div>
+               </aside>
+               <main className='col-span-3 pl-4'>
+                    <ProductView _range={range}></ProductView>
+               </main>
+          </div>
+     )
 }

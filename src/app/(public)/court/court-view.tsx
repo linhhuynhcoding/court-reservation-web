@@ -11,42 +11,10 @@ import {
      PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious
 } from "@/components/ui/pagination";
 import { min } from "date-fns";
-import { cn } from "@/lib/utils";
+import { cn, range } from "@/lib/utils";
+import { PaginationFirst, PaginationLast } from "@/components/paginaiton";
 
-const range = (start: number, end: number) =>
-     Array.from({ length: end - start }, (_, i) => start + i)
 
-function PaginationFirst({
-     className,
-     ...props
-}: React.ComponentProps<typeof PaginationLink>) {
-     return (
-          <PaginationLink
-               aria-label="Go to previous page"
-               size="default"
-               className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
-               {...props}
-          >
-               <FiChevronsLeft />
-          </PaginationLink>
-     )
-}
-
-function PaginationLast({
-     className,
-     ...props
-}: React.ComponentProps<typeof PaginationLink>) {
-     return (
-          <PaginationLink
-               aria-label="Go to previous page"
-               size="default"
-               className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
-               {...props}
-          >
-               <FiChevronsRight />
-          </PaginationLink>
-     )
-}
 
 export function CourtView() {
      const [filter, setFilter] = useState<CourtFilter>(CourtFilterSchema.parse({}));

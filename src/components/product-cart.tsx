@@ -2,24 +2,40 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import React from 'react'
 import Image from "next/image";
 import product from '@/assets/product.avif'
+import { ProductResponse } from "@/schemas/product.schema";
 
 const SAMPLE_IMAGE = product.src
 
-function ProductCart() {
+function ProductCart({ product = {
+     id: 1,
+     buyTurn: 0,
+     category: {
+          id: 0,
+          name: "EQUIPMENT"
+     },
+     image: { image_url: SAMPLE_IMAGE, status: "ACTIVE", type: "ORGINAL", height: 10, width: 10, id: 1 },
+     name: "Vợt Pickleball - 500 xanh dương",
+     price: 1199000,
+     stock: 100
+
+} }: { product?: ProductResponse }) {
+     
      return (
           <div className={`relative bg-white flex flex-col justify-self-stretch border border-xs border-gray-200
  md:w-3xs w-xs p-3 gap-2 max-h-[500px] hover:cursor-pointer`}>
 
                <div className={`relative flex justify-items-stretch w-auto h-52 overflow-hidden`}>
-                    <Image className="rounded-sm h-full" src={SAMPLE_IMAGE} objectFit="cover" sizes="" fill={true} alt="" />
+                    <Image className="rounded-sm h-full" src={product?.image?.image_url ?? SAMPLE_IMAGE} objectFit="cover" sizes="" fill={true} alt="" />
                </div>
 
                <div className="flex flex-col gap-2">
                     <div className="flex items-end">
-                         <span className="font-normal text-lg">1.100.000<u>đ</u></span>
+                         <span className="font-normal text-lg">
+                              {Math.round(product.price).toLocaleString("vi")} <u>đ</u>
+                              </span>
                     </div>
                     <h3 className="font-bold tracking-wide lg:text-md">
-                         Vợt Pickleball - 500 xanh dương
+                         {product.name}
                     </h3>
                     <span className="flex text-xs font-semibold items-center gap-2 content-self-end">
                          {/* <FaLocationArrow /> */}
