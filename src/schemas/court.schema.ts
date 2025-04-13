@@ -24,7 +24,7 @@ export const OrgaResponseSchema = z.object({
      price: z.number().nullable(),
      address: AddressResponseSchema.nullable(),
      status: z.string().nullable(),
-     // imageCourts: z.array(ImageCourtSchema).nullable(),
+     imageCourts: z.any(),
      courts: z.array(CourtResponseSchema).nullable(),
 });
 

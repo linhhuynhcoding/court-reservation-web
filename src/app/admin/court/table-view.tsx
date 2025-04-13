@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useGetAllCourts } from "@/queries/useCourt";
+import { useDeleteCourtMutation, useGetAllCourts } from "@/queries/useCourt";
 import { useState } from "react";
 import { CourtFilter, CourtFilterSchema } from '@/schemas/filter.schemas';
 import {
@@ -10,10 +10,34 @@ import {
 } from "@/components/ui/pagination";
 import { PaginationFirst, PaginationLast } from "@/components/paginaiton";
 import { range } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import {
+     AlertDialog,
+     AlertDialogAction,
+     AlertDialogCancel,
+     AlertDialogContent,
+     AlertDialogDescription,
+     AlertDialogFooter,
+     AlertDialogHeader,
+     AlertDialogTitle,
+     AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import {
+     Dialog,
+     DialogContent,
+     DialogDescription,
+     DialogHeader,
+     DialogTitle,
+     DialogTrigger,
+} from "@/components/ui/dialog";
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 function TableCourtView() {
-     const [filter, setFilter] = useState<CourtFilter>(CourtFilterSchema.parse({pageSize: 50}));
+     const router = useRouter();
+     const [filter, setFilter] = useState<CourtFilter>(CourtFilterSchema.parse({ pageSize: 50 }));
      const { data, isLoading } = useGetAllCourts(filter);
+     const useDeleteCourt = useDeleteCourtMutation();
 
      const handlePaging = (page: number) => {
           if (page < 0 || page >= data?.payload?.data?.totalPages) return;
@@ -22,6 +46,17 @@ function TableCourtView() {
                ...filter,
                page
           }));
+     }
+
+     const handleDelete = async (id: number) => {
+          try {
+               await useDeleteCourt.mutateAsync(id);
+
+               toast.success("Thành công!");
+
+          } catch (error) {
+               toast.error("Xóa sân thất bại!")
+          }
      }
 
      return (
@@ -41,6 +76,24 @@ function TableCourtView() {
                          </TableRow>
                     </TableHeader>
                     <TableBody>
+                         <TableRow >
+                              <TableCell>0</TableCell>
+                              <TableCell>aaaaaa</TableCell>
+                              <TableCell>aaaaaa</TableCell>
+                              <TableCell className='text-right'>bbbb</TableCell>
+                              <TableCell className='text-right'>bbbb</TableCell>
+                              <TableCell className='text-right'>bbbbbbbb</TableCell>
+                              <TableCell className=''>bbbbbbbbb</TableCell>
+                              <TableCell className='text-red-700 text-right flex justify-end gap-3'>
+                                   <Button variant={"outline"} className='bg-emerald-400 text-white hover:bg-emerald-300 hover:text-white hover:cursor-pointer'>
+                                        Chỉnh sửa
+                                   </Button>
+                                   <Button variant={"outline"} className='w-[100px] bg-rose-500 text-white hover:bg-rose-300 hover:text-white hover:cursor-pointer'>
+                                        Xóa
+                                   </Button>
+                              </TableCell>
+
+                         </TableRow>
                          {
                               !isLoading ?
                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,12 +106,45 @@ function TableCourtView() {
                                              <TableCell className='text-right'>{Number(c?.price).toLocaleString("vi")}</TableCell>
                                              <TableCell className='text-right'>{c?.address?.city}</TableCell>
                                              <TableCell className=''>{c?.status}</TableCell>
-                                             <TableCell className=''></TableCell>
+                                             <TableCell className='text-red-700 text-right flex justify-end gap-3'>
+                                                  <Button
+                                                       onClick={() => {
+                                                            router.push("/admin/court/" + c?.id)
+                                                       }}
+                                                       variant={"outline"} className='bg-emerald-400 text-white hover:bg-emerald-300 hover:text-white hover:cursor-pointer'>
+                                                       Chi tiết
+                                                  </Button>
+                                                  <AlertDialog >
+                                                       <AlertDialogTrigger asChild>
+                                                            <Button
+                                                                 variant={"outline"} className='w-[100px] bg-rose-500 text-white hover:bg-rose-300 hover:text-white hover:cursor-pointer'>
+                                                                 Xóa
+                                                            </Button>
+                                                       </AlertDialogTrigger>
+                                                       <AlertDialogContent >
+                                                            <AlertDialogHeader>
+                                                                 <AlertDialogTitle>Bạn có chắc chắn?</AlertDialogTitle>
+                                                                 <AlertDialogDescription>
+                                                                      Hành động này không thể hoàn tác. Dữ liệu trên máy chủ sẽ thay đổi vĩnh viễn.
+                                                                 </AlertDialogDescription>
+                                                            </AlertDialogHeader>
+                                                            <AlertDialogFooter>
+                                                                 <AlertDialogCancel>Hủy bỏ</AlertDialogCancel>
+                                                                 <AlertDialogAction onClick={() => handleDelete(c?.id)}
+                                                                      className='w-[100px] bg-rose-500 text-white hover:bg-rose-300 hover:text-white hover:cursor-pointer'>
+                                                                      Xóa dữ liệu
+                                                                 </AlertDialogAction>
+                                                            </AlertDialogFooter>
+                                                       </AlertDialogContent>
+                                                  </AlertDialog>
+
+                                             </TableCell>
 
                                         </TableRow>
                                    })
                                    : null
                          }
+
                     </TableBody>
                </Table>
                <Pagination className="mt-10">

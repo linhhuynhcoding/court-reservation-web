@@ -8,7 +8,9 @@ const accountApi = {
       * @description Lấy thông tin người dùng từ server (thêm token trung gian)
       * @returns AccountResType Thông tin người dùng
       */
-     me: () => http.get<AccountResType>('/auth/me', {}),
+     me: () => http.get<AccountResType>('/auth/me', {
+          headers:  { "Content-Type": "application/json" },
+     }),
 
      /**
       * @type Next Server to Server

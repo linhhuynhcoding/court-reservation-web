@@ -10,12 +10,14 @@ const authApi = {
      // Next Client to Next Server
      clogin: (body: LoginBodyType) => http.post<LoginResType>('/api/auth/login', {
           baseUrl: '',
+          headers:  { "Content-Type": "application/json" },
           body: JSON.stringify(body),
      }),
      
      // Next Server to Server
      slogin: (body: LoginBodyType) => http.post<LoginResType>(`${LOGIN_ENDPOINT}`, {
           body: JSON.stringify(body),
+          headers:  { "Content-Type": "application/json" },
      }),
 }
 

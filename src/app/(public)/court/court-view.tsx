@@ -29,8 +29,6 @@ export function CourtView() {
           }));
      }
 
-
-
      console.log(filter)
 
      return (

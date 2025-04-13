@@ -85,4 +85,8 @@ export function toQueryString(params: Record<string, unknown>): string {
 }
 
 export const range = (start: number, end: number) =>
-  Array.from({ length: end - start }, (_, i) => start + i)
+  Array.from({ length: end - start + 1 }, (_, i) => start + i)
+
+export const genCourtName = (NoC: number) => {
+  return range(1, NoC).map((i) => 'A' + (i - 1));
+}

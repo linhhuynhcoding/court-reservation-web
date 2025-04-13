@@ -1,15 +1,15 @@
 import NavLink from "@/components/NavLink";
 
 const herfs = [
-     { name: 'Dashboard', href: '/admin' },
-     { name: 'Court Management', href: '/admin/court', children: [
-          {name: 'Add Organisation', href: '/admin/court/add'},
+     { name: 'Trang chủ', href: '/admin' },
+     { name: 'Quản lý sân', href: '/admin/court', children: [
+          {name: 'Thêm sân', href: '/admin/court/add'},
           {name: 'Add Organisation', href: '/admin/court/   '},
           {name: 'Add Organisation', href: '/admin/court/   '},
           {name: 'Add Organisation', href: '/admin/court/   '},
           {name: 'Add Organisation', href: '/admin/court/   '},
      ] },
-     { name: 'About', href: '/admin/about' },
+     { name: 'Thông tin', href: '/admin/about' },
 ]
 
 export default function Layout({

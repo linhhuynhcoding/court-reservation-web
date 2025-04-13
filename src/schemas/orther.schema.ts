@@ -29,3 +29,5 @@ export const ImagePayload = z.object({
      height: z.number().int().nullable(),
      type: z.string().nullable()
 });
+
+export type ImageResponse = z.infer<typeof ImageResponseSchema>;

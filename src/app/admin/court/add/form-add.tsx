@@ -14,7 +14,7 @@ import {
      SelectItem,
 } from "@/components/ui/select";
 import { Controller, useForm } from "react-hook-form"
-import { cn } from "@/lib/utils";
+import { cn, genCourtName } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import imgApi from "@/apis/image";
@@ -22,17 +22,21 @@ import { FormMessage } from "@/components/ui/form";
 import { useUploadImageMutation } from "@/queries/useMedia";
 import { useUploadCourtMutation } from "@/queries/useCourt";
 import { toast } from "sonner";
+import { ImageResponse } from "@/schemas/orther.schema";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 // TODO: HANDLE FORM ERRORS
 export default function FormAddCourt() {
-     const [files, setFiles] = useState<FileList>()
+     const router = useRouter();
+     const [files, setFiles] = useState<FileList>();
+     const [isDisabled, setIsDisabled] = useState(false);
      const useUploadCourtImgMutation = useUploadImageMutation();
      const useCreateCourtMutation = useUploadCourtMutation();
 
      const {
           register,
           handleSubmit,
-          getValues,
           watch,
           formState: { errors },
           control
@@ -48,13 +52,23 @@ export default function FormAddCourt() {
      })
 
      const { data: cityData, isLoading: cityLoading } = useCity();
-     const { data: districtData, isLoading: districtLoading } = useDistrict(Number(watch("address.city")));
-     const { data: wardData, isLoading: wardLoading } = useWard(Number(watch("address.district")));
+     const { data: districtData, isLoading: districtLoading } = useDistrict(Number(watch("address.city")?.split(",")[1]));
+     const { data: wardData, isLoading: wardLoading } = useWard(Number(watch("address.district")?.split(",")[1]));
 
      async function handleSubmitForm(values: CreateCourtPayload) {
           console.log("payload: ", values)
+          setIsDisabled(true);
           try {
-               let body = values;
+               let body = {
+                    ...values,
+                    address: {
+                         ...values?.address,
+                         city: values?.address?.city?.split(',')[0] ?? "",
+                         district: values?.address?.district?.split(',')[0] ?? "",
+                         ward: values?.address?.ward?.split(',')[0] ?? "",
+                    },
+                    courtNames: genCourtName(values.numberOfCourts)
+               };
 
                if (files) {
 
@@ -64,20 +78,22 @@ export default function FormAddCourt() {
                          formData.append("images", file as Blob);
                     })
                     const updateImagesResponse = await useUploadCourtImgMutation.mutateAsync(formData);
-                    const data = updateImagesResponse.payload.data
+
                     body = {
                          ...body,
-                         imageCourts: { ...data }
+                         imageCourts: updateImagesResponse.payload.map(({ image_url, width, height, type }: ImageResponse) => ({ image_url, width, height, type }))
                     }
                }
 
                const uploadCourtResponse = await useCreateCourtMutation.mutateAsync(body);
-               
+
                console.log(uploadCourtResponse);
 
-               toast.success("Tạo sân thành công!");
+               toast.success("Tạo sân thành công!", { duration: 4000 });
 
-               setTimeout(()=> {}, 2000);
+               setTimeout(() => { }, 2000);
+
+               router.push("/admin");
           }
           catch (e) {
                console.log(e);
@@ -90,26 +106,26 @@ export default function FormAddCourt() {
 
      return (
           <form onSubmit={handleSubmit(handleSubmitForm)} className="flex flex-col gap-8">
-               <div className="flex flex-col gap-4">
+               <div className="flex flex-col gap-4" >
                     <div className="pb-6 border-b">
                          <h2 className="text-2xl font-semibold">Thông tin cơ bản</h2>
                     </div>
                     <div className="flex gap-6 justify-stretch justify-items-stretch">
                          <div className="flex flex-col gap-1">
                               <Label className="font-normal">Tên sân</Label>
-                              <Input {...register("name")} className="w-[200px]" ></Input>
+                              <Input disabled={isDisabled} {...register("name")} className="w-[200px]" ></Input>
                          </div>
                          <div className="flex flex-col gap-1">
                               <Label className="font-normal">Số điện thoại</Label>
-                              <Input {...register("phone")} type="phone"></Input>
+                              <Input disabled={isDisabled} {...register("phone")} type="phone"></Input>
                          </div>
                          <div className=" flex flex-col gap-1">
                               <Label className="font-normal">Số lượng sân bóng</Label>
-                              <Input {...register("numberOfCourts")} className="w-[150px]" type="number"></Input>
+                              <Input disabled={isDisabled} {...register("numberOfCourts")} className="w-[150px]" type="number"></Input>
                          </div>
                          <div className="flex flex-col gap-1">
                               <Label className="font-normal">Giá</Label>
-                              <Input {...register("price")} className="w-[100px]" type="number"></Input>
+                              <Input disabled={isDisabled} {...register("price")} className="w-[100px]" type="number"></Input>
                          </div>
                     </div>
                </div>
@@ -124,7 +140,7 @@ export default function FormAddCourt() {
                                    name="address.city"
                                    control={control}
                                    render={({ field }) => (
-                                        <Select
+                                        <Select disabled={isDisabled}
                                              onValueChange={field.onChange}
                                              value={field.value ?? undefined}
                                              defaultValue={field.value ?? undefined} >
@@ -135,7 +151,7 @@ export default function FormAddCourt() {
                                                   {
                                                        !cityLoading ?
                                                             cityData?.payload.data?.map((city: ProvinceResponseSchemaType, index: number) => {
-                                                                 return <SelectItem key={index} value={String(city?.code)}>{city.name}</SelectItem>
+                                                                 return <SelectItem key={index} value={`${city?.name},${city?.code}`}>{city.name}</SelectItem>
                                                             })
                                                             : null
                                                   }
@@ -153,7 +169,8 @@ export default function FormAddCourt() {
                                    name="address.district"
                                    control={control}
                                    render={({ field }) => (
-                                        <Select
+                                        <Select 
+                                             disabled={isDisabled}
                                              onValueChange={field.onChange}
                                              value={field.value ?? undefined}
                                              defaultValue={field.value ?? undefined} >
@@ -164,7 +181,7 @@ export default function FormAddCourt() {
                                                   {
                                                        !districtLoading ?
                                                             districtData?.payload?.data?.[0]?.map((district: DistrictResponseSchemaType, index: number) => {
-                                                                 return <SelectItem key={index} value={String(district?.code)}>{district.name}</SelectItem>
+                                                                 return <SelectItem key={index} value={`${district?.name},${district?.code}`}>{district.name}</SelectItem>
                                                             })
                                                             : null
                                                   }
@@ -180,7 +197,7 @@ export default function FormAddCourt() {
                                    name="address.ward"
                                    control={control}
                                    render={({ field }) => (
-                                        <Select
+                                        <Select disabled={isDisabled}
                                              onValueChange={field.onChange}
                                              value={field.value ?? undefined}
                                              defaultValue={field.value ?? undefined} >
@@ -191,7 +208,7 @@ export default function FormAddCourt() {
                                                   {
                                                        !wardLoading ?
                                                             wardData?.payload?.data?.[0]?.map((ward: WardResponseSchemaType, index: number) => {
-                                                                 return <SelectItem key={index} value={String(ward?.code)}>{ward.name}</SelectItem>
+                                                                 return <SelectItem key={index} value={`${ward?.name},${ward?.code}`}>{ward.name}</SelectItem>
                                                             })
                                                             : null
                                                   }
@@ -202,7 +219,7 @@ export default function FormAddCourt() {
                               />                         </div>
                          <div className="flex flex-col gap-1">
                               <Label className="font-normal">Địa chỉ cụ thể</Label>
-                              <Input {...register("address.addressLine")} className=""></Input>
+                              <Input disabled={isDisabled} {...register("address.addressLine")} className=""></Input>
                          </div>
                     </div>
                </div>
@@ -211,7 +228,7 @@ export default function FormAddCourt() {
                          <h2 className="text-2xl font-semibold">Ảnh</h2>
                     </div>
                     <div className="flex flex-col gap-6 justify-stretch justify-items-stretch items-stretch">
-                         <Input onChange={(e) => {
+                         <Input disabled={isDisabled} onChange={(e) => {
                               if (e.target.files) {
                                    setFiles(e.target.files)
                               }
@@ -233,7 +250,15 @@ export default function FormAddCourt() {
 
                     </div>
                </div>
-               <Button type="submit" className="pl-5 pr-5">Tạo sân</Button>
+               <div>
+                    <Button type="submit" className="pl-5 pr-5" disabled={useUploadCourtImgMutation.isPending || useCreateCourtMutation.isPending}>
+                         {useUploadCourtImgMutation.isPending || useCreateCourtMutation.isPending ?
+                              <Loader2 className="animate-spin" />
+                              : null
+                         }
+                         Tạo sân
+                    </Button>
+               </div>
           </form>
      )
 }
