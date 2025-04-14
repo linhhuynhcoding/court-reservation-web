@@ -29,7 +29,7 @@ const HOME_PATHS = ['', '/', '/login', '/register'];
 export default function Header({ }): JSX.Element {
      const { account } = useAppContext();
      const pathname = usePathname();
-     const isAdmin = pathname.startsWith('/admin');
+     const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/manager') ;
      const isHome = HOME_PATHS.includes(pathname);
      console.log("account: ", account);
 

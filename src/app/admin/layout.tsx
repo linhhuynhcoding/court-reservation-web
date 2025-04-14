@@ -7,8 +7,8 @@ const herfs = [
           {name: 'Add Organisation', href: '/admin/court/   '},
           {name: 'Add Organisation', href: '/admin/court/   '},
           {name: 'Add Organisation', href: '/admin/court/   '},
-          {name: 'Add Organisation', href: '/admin/court/   '},
      ] },
+     {name: 'Quản lý tài khoản ', href: '/admin/account'},
      { name: 'Thông tin', href: '/admin/about' },
 ]
 

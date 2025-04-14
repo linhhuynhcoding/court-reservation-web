@@ -1,9 +1,15 @@
 import NavLink from "@/components/NavLink";
 
 const herfs = [
-     { name: 'Dashboard', href: '/manager' },
-     { name: 'Court Management', href: '/manager/court' },
-     { name: 'About', href: '/manager/about' },
+     { name: 'Trang chủ', href: '/manager' },
+     {
+          name: 'Booking', href: '/manager/booking', children: [
+               { name: 'Add Organisation', href: '/manager/court/   ' },
+               { name: 'Add Organisation', href: '/manager/court/   ' },
+               { name: 'Add Organisation', href: '/manager/court/   ' },
+          ]
+     },
+     { name: 'Thông tin', href: '/manager/about' },
 ]
 
 export default function Layout({
@@ -14,14 +20,14 @@ export default function Layout({
      return (
           <>
                <div className='grid min-h-screen grid-cols-6'>
-                    <aside className='col-span-1' aria-label='Sidebar'>
-                         <div className='flex h-full flex-col overflow-y-auherf bg-gray-100 py-4 px-3 shadow-lg'>
+                    <aside className='z-1 col-span-1' aria-label='Sidebar'>
+                         <div className='flex h-full flex-col white py-4 px-3 shadow-lg'>
                               <ul className='space-y-2'>
                                    <NavLink hrefs={herfs}
-                                        hover_style="hover:bg-gray-300 hover:border-1"
-                                        focus_style="bg-gray-300 border-1"
-                                        style="flex items-center rounded-lg p-2 font-normal text-gray-900 " />
-                                   {/* <li>
+                                        hover_style="hover:bg-orange-300 hover:text-white rounded-sm"
+                                        focus_style="bg-orange-400 text-white  rounded-sm"
+                                        style="flex items-center p-2 pl-3 font-semibold" />
+                                           {/* <li>
                                         <Link
                                              herf='/'
                                              
@@ -58,7 +64,7 @@ export default function Layout({
                               </ul>
                          </div>
                     </aside>
-                    <main className='col-span-5 h-full py-4 px-3'>{children}</main>
+                    <main className='col-span-5 h-full py-4 px-3 bg-gray-50'>{children}</main>
                </div>
           </>
      );
