@@ -3,7 +3,7 @@
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import CourtCart from "@/components/court-cart";
 import { useGetAllCourts } from "@/queries/useCourt";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { CourtFilter, CourtFilterSchema } from '@/schemas/filter.schemas';
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -16,7 +16,7 @@ import { PaginationFirst, PaginationLast } from "@/components/paginaiton";
 
 
 
-export function CourtView() {
+export function CourtView({ location = null, name = null, date = null }: { location?: string | null, name?: string | null, date?: Date | null }) {
      const [filter, setFilter] = useState<CourtFilter>(CourtFilterSchema.parse({}));
      const { data, isLoading } = useGetAllCourts(filter);
 
@@ -29,10 +29,29 @@ export function CourtView() {
           }));
      }
 
+     useEffect(() => {
+          setFilter({
+               ...filter,
+               location,
+               search: name,
+               dateTime: date?.toISOString().split('.')[0]
+          })
+     }, [location, name, date])
+
      console.log(filter)
 
      return (
           <>
+               <div className=" p-4 ">
+                    <h1 className="text-xl font-semibold">SÂN PICKLEBALL</h1>
+
+               </div>
+               <div className="gap-4 p-4 justify-around">
+                    <div className="border">
+
+                    </div>
+
+               </div>
                <div className="grid md:grid-cols-3 grid-cols-1 gap-4 p-4 justify-around">
                     {
                          isLoading

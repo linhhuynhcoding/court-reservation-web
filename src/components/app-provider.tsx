@@ -13,11 +13,15 @@ import { toast } from "sonner";
 const AppContext = createContext<{
      isAuth: boolean;
      account: AccountType | null;
+     role: RoleType | null;
      setAccount: (account: AccountType) => void;
+     setRole: (role: RoleType) => void;
 }>({
      isAuth: false,
      account: null,
+     role: null,
      setAccount: () => { },
+     setRole: () => { },
 });
 
 export const useAppContext = () => {
@@ -28,6 +32,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
      const [account, setUserState] = useState<AccountType | null>(() => {
           return null
      })
+     const [role, setRoleState] = useState<RoleType | null>(() => {
+          return null
+     })
 
      useEffect(() => {
           const accessToken = getAccessTokenFromLocalStorage();
@@ -36,7 +43,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
                fetchAccount().then(({ payload }) => {
                     const _account = (payload?.data as AccountType);
+                    const { role } = decodeToken(accessToken)
                     setUserState(_account);
+                    setRoleState(role);
                }).catch(e => {
                     handleErrorApi({ error: "Lỗi server!" })
                });
@@ -44,8 +53,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
      }, []);
 
      return (
-          <AppContext value={{ isAuth: !!account, account, setAccount: setUserState }}>
-
+          <AppContext value={{ isAuth: !!account, account, role, setAccount: setUserState, setRole: setRoleState }}>
                {children}
           </AppContext>
      );

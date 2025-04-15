@@ -15,6 +15,7 @@ export const BaseFilterSchema = z.object({
      page: z.number().min(0).max(10000).default(0),
 
      pageSize: z.number().min(10).max(50).default(12),
+
 });
 
 export const CourtFilterSchema = z.object({
@@ -32,6 +33,11 @@ export const CourtFilterSchema = z.object({
      page: z.number().min(0).max(10000).default(0),
 
      pageSize: z.number().min(10).max(50).default(12),
+
+     dateTime: z.string().nullable().optional(),
+     search: z.string().nullable().optional(),
+     location: z.string().nullable().optional()
+
 });
 
 export const ProductFilterSchema = z.object({

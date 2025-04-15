@@ -1,7 +1,7 @@
 export const Role = {
      Player: 'PLAYER',
      Coach: 'COACH',
-     Manager: 'MANAGER',
+     Manager: 'COURT_MANAGER',
      Admin: 'ADMIN',
      Guest: 'Guest'
 } as const

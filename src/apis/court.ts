@@ -21,7 +21,7 @@ const courtApi = {
       * @param (query) CourtFilter Bộ lọc của sân (pagiantion, sort,...)
       * @returns 
       */
-     getCourts: (filter: CourtFilter) => http.get<unknown>(`${COURT_ENDPOINT}${toQueryString(filter)}`, {}),
+     getCourts: (filter: CourtFilter) => http.get<unknown>(`${COURT_ENDPOINT}/search${toQueryString(filter)}`, {}),
 
      /**
       * Tạo sân
