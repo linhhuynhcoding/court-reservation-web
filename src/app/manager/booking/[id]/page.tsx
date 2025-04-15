@@ -2,7 +2,6 @@
 
 
 import { useParams } from "next/navigation";
-import FormAddCourt from "../add/form-add"
 import { useGetCourt } from "@/queries/useCourt";
 import { ScheduelBooking } from "./schedule";
 
