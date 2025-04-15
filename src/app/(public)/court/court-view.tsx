@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select"
 import Link from "next/link";
 
+import { FaSort } from "react-icons/fa";
 
 
 export function CourtView({ location = null, name = null, date = null }: { location?: string | null, name?: string | null, date?: Date | null }) {
@@ -64,6 +65,7 @@ export function CourtView({ location = null, name = null, date = null }: { locat
                                    })
                               }}>
                                    <SelectTrigger className="w-[180px]">
+                                        <FaSort  />
                                         <SelectValue placeholder="Sắp xếp" />
                                    </SelectTrigger>
                                    <SelectContent>

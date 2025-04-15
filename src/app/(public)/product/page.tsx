@@ -17,11 +17,11 @@ export default function ProductPage() {
                     </div>
                     <div className='flex flex-col border-b pt-4 pb-6 h-fit gap-10'>
                          <h2 className='text-lg font-semibold '>CHỌN GIÁ</h2>
-                         <div className='flex flex-col gap-4'>
+                         <div className='flex flex-col gap-4 w-full'>
                               <Slider onValueChange={(value: number[]) => setRange(value)} defaultValue={[0, 100]} max={100} step={10} />
-                              <div className='flex gap-6'>
-                                   <Input value={(range[0] * 5000000 / 100).toLocaleString("vi")} disabled></Input>
-                                   <Input value={(range[1] * 5000000 / 100).toLocaleString("vi")} disabled></Input>
+                              <div className='flex justify-between gap-6 '>
+                                   <Input className='w-[100px]' value={(range[0] * 5000000 / 100).toLocaleString("vi")} disabled></Input>
+                                   <Input className='w-[100px]' value={(range[1] * 5000000 / 100).toLocaleString("vi")} disabled></Input>
                               </div>
                          </div>
                     </div>

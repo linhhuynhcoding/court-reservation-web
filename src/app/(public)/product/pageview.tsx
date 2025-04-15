@@ -8,8 +8,16 @@ import { useGetAllProducts } from '@/queries/useProduct'
 import { CourtFilterSchema, ProductFilter, ProductFilterSchema } from '@/schemas/filter.schemas';
 import { ProductResponse } from '@/schemas/product.schema';
 import React, { useEffect, useState } from 'react'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { FaSort } from "react-icons/fa";
 
-export default function ProductView({_range = [0, 100]}: {_range: number[]}) {
+export default function ProductView({ _range = [0, 100] }: { _range: number[] }) {
   const [filter, setFilter] = useState<ProductFilter>(ProductFilterSchema.parse({}));
   const { data, isLoading } = useGetAllProducts(filter);
 
@@ -34,6 +42,28 @@ export default function ProductView({_range = [0, 100]}: {_range: number[]}) {
 
   return (
     <div className='flex flex-col'>
+      <div className="gap-4 p-4 justify-around">
+        <div className="flex justify-end p-2 rounded-lg">
+          <div className="self-end">
+            <Select onValueChange={(value) => {
+              setFilter({
+                ...filter,
+                sort: `[[PRICE,${value}]]`
+              })
+            }}>
+              <SelectTrigger className="w-fit border-none shadow-none text-blue-900 font-bold">
+                <FaSort className='text-blue-900'/>
+                <SelectValue placeholder="Sắp xếp theo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ASC">Giá từ thấp đến cao</SelectItem>
+                <SelectItem value="DESC">Giá từ cao đến thấp</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+      </div>
       <div className='grid 2xl:grid-cols-4 lg:grid-cols-3 gap-8'>
         {
           data?.payload?.data?.content?.map((p: ProductResponse, i: number) => {
@@ -47,7 +77,7 @@ export default function ProductView({_range = [0, 100]}: {_range: number[]}) {
             <PaginationFirst onClick={() => handlePaging(0)} />
           </PaginationItem>
           <PaginationItem className="hover:cursor-pointer" >
-            <PaginationPrevious onClick={() => handlePaging(filter.page - 1)}/>
+            <PaginationPrevious onClick={() => handlePaging(filter.page - 1)} />
           </PaginationItem>
           {
             data?.payload?.data

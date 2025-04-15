@@ -31,7 +31,7 @@ function CourtCart({orga = {
  md:w-2xs w-full  p-3 rounded-md gap-2 max-h-[500px] hover:cursor-pointer`}>
 
                <div className={`relative flex justify-items-stretch w-auto h-52 overflow-hidden`}>
-                    <Image className="rounded-sm h-full" src={orga?.imageCourts?.[0]?.image?.image_url ?? SAMPLE_IMAGE} objectFit="cover" sizes="" fill={true} alt="" />
+                    <Image className="rounded-sm h-full" src={orga?.imageCourts?.[0]?.image_url ?? SAMPLE_IMAGE} objectFit="cover" sizes="" fill={true} alt="" />
                </div>
 
                <div className="flex flex-col gap-2">

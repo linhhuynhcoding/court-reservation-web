@@ -45,8 +45,8 @@ function ProductCart({ product = {
                          <span className="flex items-center gap-2 font-bold text-lg">
                               ADIASS
                          </span>
-                         <span className="flex items-center gap-2">
-                              <HiOutlineShoppingBag className="text-2xl" />
+                         <span className="flex items-center gap-2 transition delay-50 duration-200 ease-in-out hover:bg-blue-800 hover:text-white p-2 rounded-3xl ">
+                              <HiOutlineShoppingBag className="text-2xl " />
                          </span>
                     </div>
                </div>
