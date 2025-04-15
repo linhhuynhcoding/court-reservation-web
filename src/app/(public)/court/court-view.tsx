@@ -13,6 +13,14 @@ import {
 import { min } from "date-fns";
 import { cn, range } from "@/lib/utils";
 import { PaginationFirst, PaginationLast } from "@/components/paginaiton";
+import {
+     Select,
+     SelectContent,
+     SelectItem,
+     SelectTrigger,
+     SelectValue,
+} from "@/components/ui/select"
+import Link from "next/link";
 
 
 
@@ -47,8 +55,23 @@ export function CourtView({ location = null, name = null, date = null }: { locat
 
                </div>
                <div className="gap-4 p-4 justify-around">
-                    <div className="border">
-
+                    <div className="flex justify-end border p-2 rounded-lg">
+                         <div className="self-end">
+                              <Select onValueChange={(value) => {
+                                   setFilter({
+                                        ...filter,
+                                        sort: `[[PRICE,${value}]]`
+                                   })
+                              }}>
+                                   <SelectTrigger className="w-[180px]">
+                                        <SelectValue placeholder="Sắp xếp" />
+                                   </SelectTrigger>
+                                   <SelectContent>
+                                        <SelectItem value="ASC">Giá từ thấp đến cao</SelectItem>
+                                        <SelectItem value="DESC">Giá từ cao đến thấp</SelectItem>
+                                   </SelectContent>
+                              </Select>
+                         </div>
                     </div>
 
                </div>
@@ -86,9 +109,12 @@ export function CourtView({ location = null, name = null, date = null }: { locat
                                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                         data?.payload?.data?.content?.map((court: any, index: number) => {
                                              return (
-                                                  <CourtCart key={index} orga={court}>
+                                                  <Link href={`/court/${court.id}`} key={index}>
+                                                       <CourtCart orga={court}>
 
-                                                  </CourtCart>
+                                                       </CourtCart>
+
+                                                  </Link>
                                              );
                                         })
                                    }
