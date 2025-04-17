@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { LoginBody, LoginBodyType } from "@/schemas/auth.schema";
+import { RegisterBody, RegisterBodyType } from "@/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "./ui/button";
 import React, { useRef } from "react";
@@ -12,29 +12,30 @@ import authApi from "../apis/auth";
 import { useRouter } from 'next/navigation'
 import { handleErrorApi } from "../lib/utils";
 import { toast } from "sonner";
-import { useLoginMutation } from "../queries/useAuth";
+import { useLoginMutation, useRegisterMutation } from "../queries/useAuth";
 
-export function FormLogin() {
+export function FormRegister() {
   const router = useRouter();
-  const loginMutation = useLoginMutation();
-  const form = useForm<LoginBodyType>({
-    resolver: zodResolver(LoginBody),
+  const registerMutation = useRegisterMutation();
+  const form = useForm<RegisterBodyType>({
+    resolver: zodResolver(RegisterBody),
     defaultValues: {
       username: "",
+      email: "",
       password: "",
+      confirmPassword: "",
     }
   })
 
-  const passwordField = useRef<HTMLInputElement>(null);
-
-  async function onSubmit(values: LoginBodyType) {
+  async function onSubmit(values: RegisterBodyType) {
 
     try {
-      await loginMutation.mutateAsync(values);
+      await registerMutation.mutateAsync(values);
 
-      toast.success("Login successfully!");
-      setTimeout(() => { }, 2000);
-      router.refresh();
+      toast.success("Register successfully!");
+      setTimeout(() => {
+        router.push("\login");
+      }, 2000);
     }
     catch (e) {
 
@@ -65,8 +66,24 @@ export function FormLogin() {
         >
           <div className="text-center text-4xl font-bold text-primary">
             <h1
-            className="bg-gradient-to-r from-primary to-primary/70 text-transparent bg-clip-text"
-            >ĐĂNG NHẬP</h1>
+              className="bg-gradient-to-r from-primary to-primary/70 text-transparent bg-clip-text"
+            >ĐĂNG KÝ</h1>
+          </div>
+          <div className="text-left">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Tên của bạn</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Họ và tên..." className="rounded-xm"
+                      ></Input>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
           <div className="text-left">
             <FormField
@@ -74,15 +91,26 @@ export function FormLogin() {
               name="username"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Tên đăng nhập</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Type your username..." className="rounded-xm"
-                      onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          passwordField.current?.focus();
-                        }
-                      }} ></Input>
+                    <Input {...field} placeholder="Điền tên đăng nhập..." className="rounded-xm"
+                      ></Input>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="text-left">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Điền mail của bạn..." className="rounded-xm"
+                       ></Input>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -95,14 +123,24 @@ export function FormLogin() {
               name="password"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Mật khẩu</FormLabel>
                   <FormControl>
-                    <Input type="password" {...field} ref={(e: HTMLInputElement) => {
-                      field.ref(e);
-                      if (e) {
-                        passwordField.current = e;
-                      }
-                    }} placeholder="Password"></Input>
+                    <Input type="password" {...field} placeholder="Mật khẩu của bạn"></Input>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="text-left">
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Xác nhận mật khẩu</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} placeholder="Xác nhận mật khẩu"></Input>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,9 +148,9 @@ export function FormLogin() {
             />
           </div>
           <div className="flex flex-col content-center items-center justify-center gap-2 mt-2">
-            <Button className={`w-fit pl-20 pr-20 rounded-none bg-sky-600 font-bold text-white hover:bg-sky-500 ${loginMutation.isPending ? 'bg-sky-500' : null}`} type="submit" >
+            <Button className={`w-fit pl-20 pr-20 rounded-none bg-sky-600 font-bold text-white hover:bg-sky-500 ${registerMutation.isPending ? 'bg-sky-500' : null}`} type="submit" >
               {
-                loginMutation.isPending
+                registerMutation.isPending
                   ?
                   <div>
                     <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

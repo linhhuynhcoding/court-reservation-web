@@ -13,7 +13,7 @@
   --color-foreground: var(--foreground);
   /* --font-open-sans: "Open Sans", sans-serif; */
   /* --font-roboto-mono: "Roboto Mono", monospace; */
-  /* --font-roboto: "Roboto", sans-serif; */
+  --font-roboto: "Roboto", sans-serif;
   --font-display: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
   --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;

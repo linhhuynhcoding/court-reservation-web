@@ -64,7 +64,7 @@ export function CourtView({ location = null, name = null, date = null }: { locat
                                         sort: `[[PRICE,${value}]]`
                                    })
                               }}>
-                                   <SelectTrigger className="w-[180px]">
+                                   <SelectTrigger className="w-full">
                                         <FaSort  />
                                         <SelectValue placeholder="Sắp xếp" />
                                    </SelectTrigger>
@@ -138,7 +138,7 @@ export function CourtView({ location = null, name = null, date = null }: { locat
                                    ?
                                    range(Math.max(filter.page - 2, 0), Math.min(filter.page + 2, data?.payload?.data?.totalPages - 1)).map((p, index) => {
                                         return <PaginationItem key={index} className="hover:cursor-pointer">
-                                             <PaginationLink onClick={() => handlePaging(p)} >{p + 1}</PaginationLink>
+                                             <PaginationLink className={filter.page === p ? 'border' : ''} onClick={() => handlePaging(p)} >{p + 1}</PaginationLink>
                                         </PaginationItem>
                                    })
                                    : null

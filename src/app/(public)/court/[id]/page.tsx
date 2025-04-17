@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useGetCourt } from "@/queries/useCourt"
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
      Accordion,
      AccordionContent,
@@ -18,6 +18,7 @@ const SAMPLE_IMAGE = sample.src;
 import Image from "next/image";
 
 export default function DetailCourtPage() {
+     const router = useRouter();
      const { id: _id } = useParams();
      const id = typeof _id === "string" ? _id : "";
 
@@ -25,7 +26,7 @@ export default function DetailCourtPage() {
 
      return (
           <div className="w-full bg-gray-50 h-fit min-h-dvh flex justify-center">
-               <div className="w-[80%] bg-pink-50 h-fit min-h-dvh flex flex-col gap-4 justify-start">
+               <div className="w-[80%] h-fit min-h-dvh flex flex-col gap-4 justify-start">
                     <div className="z-1 sticky top-0 right-0 left-0 bg-white rounded-b-lg flex p-2 pb-4  justify-between items-center">
                          <div className="flex gap-4 flex-col pl-4">
                               <h1 className="text-2xl font-semibold">
@@ -37,7 +38,8 @@ export default function DetailCourtPage() {
                          </div>
                          <div className="flex gap-6 pr-10">
                               <Button variant="outline" className="pl-8 pr-8 text-sky-700 border-sky-700 h-[40px] w-[160px] hover:text-sky-700 hover:cursor-pointer" size={"lg"}>Lịch trống</Button>
-                              <Button variant="outline" className="pl-8 pr-8 text-white bg-sky-700 h-[40px] w-[160px] hover:bg-sky-700 hover:text-white hover:cursor-pointer " size={"lg"}>Đặt ngay</Button>
+                              <Button onClick={() => {router.push(`/booking/${id}`)}}
+                              variant="outline" className="pl-8 pr-8 text-white bg-sky-700 h-[40px] w-[160px] hover:bg-sky-700 hover:text-white hover:cursor-pointer " size={"lg"}>Đặt ngay</Button>
                          </div>
                     </div>
 
@@ -69,7 +71,7 @@ export default function DetailCourtPage() {
                                    <h2 className="absolute text-4xl font-bold blur-lg text-yellow-400/60">
                                         {(data?.payload?.data?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
                                    </h2>
-                                   <h2 className="text-4xl font-semibold text-primary">
+                                   <h2 className="text-4xl font-semibold text-primary font-roboto">
                                         {(data?.payload?.data?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
                                    </h2>
                               </div>

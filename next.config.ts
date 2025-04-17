@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
         protocol: "http"
       },
+      {
+        hostname: "avatar.iran.liara.run",
+        protocol: "https"
+      },
     ]
   }
 };

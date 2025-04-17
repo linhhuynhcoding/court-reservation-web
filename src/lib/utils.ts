@@ -31,7 +31,7 @@ export const handleErrorApi = ({
   } else {
     if (error instanceof GlobarError || error instanceof HttpError) {
       toast.error("Có lỗi xảy ra", {
-        description: error.payload.message,
+        description: error.payload.error as string,
 
         duration: duration ?? 2000,
       }
@@ -89,4 +89,12 @@ export const range = (start: number, end: number) =>
 
 export const genCourtName = (NoC: number) => {
   return range(1, NoC).map((i) => 'A' + (i - 1));
+}
+
+export const processTimeBooking = (time: string, duration: number) => {
+  const timeInMinute = Number(time.split(":")[0])*60 + Number(time.split(":")[1]) + duration * 60;
+  const fromHour = Math.floor(timeInMinute / 60);
+  const fromMinute = timeInMinute % 60;
+
+  return time + " - " + fromHour.toString().padStart(2, "0") + ":" + fromMinute.toString().padStart(2, "0");
 }

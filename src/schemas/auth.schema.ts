@@ -17,6 +17,7 @@ export const LoginRes = ApiRes(
 export const RegisterBody = z.object({
      username: z.string().min(8).max(20),
      email: z.string().email(),
+     name: z.string(),
      password: z.string().regex(RegExp("^(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]+$")),
      confirmPassword: z.string(),
 })
