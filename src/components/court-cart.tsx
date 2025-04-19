@@ -8,7 +8,7 @@ import { OrgaResponse } from "@/schemas/court.schema";
 const SAMPLE_IMAGE = sample.src;
 // const SAMPLE_IMAGE = 'https://placehold.co/600x400/png';
 
-function CourtCart({orga = {
+function CourtCart({ orga = {
      name: "Sân Cuộc tình dĩ vãng",
      price: 24.000,
      address: {
@@ -25,13 +25,13 @@ function CourtCart({orga = {
      phone: "",
      status: "",
      id: 0
-}}: {orga?: OrgaResponse}) {
+} }: { orga?: OrgaResponse }) {
      return (
           <div className={`relative bg-white flex flex-col justify-self-stretch border border-xs border-gray-200
  md:w-2xs w-full  p-3 rounded-md gap-2 max-h-[500px] hover:cursor-pointer`}>
 
                <div className={`relative flex justify-items-stretch w-auto h-52 overflow-hidden`}>
-                    <Image unoptimized  className="rounded-sm h-full" src={orga?.imageCourts?.[0]?.image_url ?? SAMPLE_IMAGE} objectFit="cover" sizes="" fill={true} alt="" />
+                    <Image unoptimized className="rounded-sm h-full" src={orga?.imageCourts?.[0]?.image_url ?? SAMPLE_IMAGE} objectFit="cover" sizes="" fill={true} alt="" />
                </div>
 
                <div className="flex flex-col gap-2">
@@ -55,10 +55,10 @@ function CourtCart({orga = {
                          </span>
                     </div>
                     <div className="flex items-end">
-                         <h2 className="font-bold tracking-wide lg:text-4xl text-primary">
-                              <span>đ</span>{orga.price?.toLocaleString('vi')}
-                         </h2>
-                         <span className="font-semibold">1 giờ</span>
+                         <span className="font-semibold text-lg leading-none text-primary">
+                              {orga.price?.toLocaleString('vi')}<span>đ</span>
+                         </span>
+                         &nbsp; <span className="font-semibold text-xs">/1 giờ</span>
                     </div>
                </div>
           </div>

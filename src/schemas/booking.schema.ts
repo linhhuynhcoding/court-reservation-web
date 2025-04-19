@@ -8,18 +8,19 @@ export const PlaceBookingPayloadSchema = z.object({
      }),
 
      courtId: z.number({
-          required_error: "courtId is required",
+          required_error: "Chọn sân là bắt buộc",
      }),
 
      timeStart: z.string({
           required_error: "timeStart is required",
      }).refine(val => !isNaN(Date.parse(val)), {
-          message: "timeStart must be a valid ISO datetime string",
+          message: "Định dạng không hợp lệ",
      }),
 
-     duration: z.number()
-          .min(0.5, { message: "Duration must be at least 0.5" })
-          .default(1.0),
+     duration: z.string()
+          .refine(val => !isNaN(parseInt(val, 10)), {
+               message: "Giờ thuê sân không hợp lệ",
+          }).default("1.0"),
 });
 
 export const BookingFormSchema = PlaceBookingPayloadSchema.omit({

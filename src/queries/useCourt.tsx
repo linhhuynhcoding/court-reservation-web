@@ -2,7 +2,7 @@ import courtApi from "@/apis/court";
 import { CourtFilter } from "@/schemas/filter.schemas";
 import { useMutation, useQuery } from "@tanstack/react-query"
 
-export const useGetCourt = (id: string, enabled: boolean) => {
+export const useGetCourt = (id: number, enabled: boolean) => {
      return useQuery({
           queryKey: ['get-court', id],
           queryFn: () => courtApi.getCourt(id),

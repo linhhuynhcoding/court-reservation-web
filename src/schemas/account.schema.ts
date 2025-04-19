@@ -2,6 +2,7 @@ import { z } from "zod";
 import { ApiRes } from "./global.schemas";
 
 export const AccountRes = z.object({
+     id: z.number(),
      username: z.string(),
      email: z.string().email(),
      name: z.string(),

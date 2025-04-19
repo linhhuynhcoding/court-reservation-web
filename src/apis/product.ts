@@ -11,5 +11,5 @@ export const productApi = {
            * @param (query) 
            * @returns 
            */
-     getCourts: (filter: ProductFilter) => http.get<unknown>(`${COURT_ENDPOINT}${toQueryString(filter)}`, {}),
+     getProducts: (filter: ProductFilter) => http.get<unknown>(`${COURT_ENDPOINT}${toQueryString(filter)}`, {}),
 } as const;

@@ -1,5 +1,6 @@
 import { http } from "@/lib/http";
 import { toQueryString } from "@/lib/utils";
+import { PlaceBookingPayload } from "@/schemas/booking.schema";
 import { CreateCourtPayload } from "@/schemas/court.schema";
 import { CourtFilter } from "@/schemas/filter.schemas";
 
@@ -9,15 +10,15 @@ const courtApi = {
 
      /**
       * Lấy thông tin chi tiết của sân
-      * Next Server to Server
+      * Next Client to Server
       * @param (path) id ID của sân
       * @returns 
       */
-     getCourt: (id?: string) => http.get<unknown>(`${COURT_ENDPOINT}/${id}`, {}),
+     getCourt: (id?: number) => http.get<unknown>(`${COURT_ENDPOINT}/${id}`, {}),
 
      /**
       * Lấy danh sách sân, kèm pagination
-      * Next Server to Server
+      * Next Client to Server
       * @param (query) CourtFilter Bộ lọc của sân (pagiantion, sort,...)
       * @returns 
       */
@@ -25,7 +26,7 @@ const courtApi = {
 
      /**
       * Tạo sân
-      * Next Server to Server
+      * Next Client to Server
       * @param (body) CreateCourtPayload Thông tin sân
       * @returns 
       */
@@ -37,7 +38,7 @@ const courtApi = {
 
      /**
       * Xóa sân
-      * Next Server to Server
+      * Next Client to Server
       * @param (body) CreateCourtPayload Thông tin sân
       * @returns 
       */

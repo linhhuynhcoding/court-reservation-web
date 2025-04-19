@@ -1,5 +1,10 @@
 import { unknown, z } from "zod";
 
+// export const PagableRes = <T extends z.ZodType>(data: T) => z.object({
+//      content: data.array(),
+
+// })
+
 export const ApiRes = <T extends z.ZodType>(data: T) => z.object({
      timestamp: z.union([z.date(), z.string()]),
      success: z.boolean(),
@@ -23,7 +28,6 @@ export const ValidationErrorRes = z.object({
      field: z.string(),
      message: z.string(),
 });
-
 
 const errorWithoutDetails = ErrorRes(z.unknown());
 const errorValidation = ErrorRes(z.array(ValidationErrorRes));

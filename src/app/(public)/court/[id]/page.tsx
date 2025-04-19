@@ -21,25 +21,25 @@ export default function DetailCourtPage() {
      const router = useRouter();
      const { id: _id } = useParams();
      const id = typeof _id === "string" ? _id : "";
-
-     const { data } = useGetCourt(id, !!_id);
+     
+     const { data: courtData } = useGetCourt(id, !!_id);
 
      return (
-          <div className="w-full bg-gray-50 h-fit min-h-dvh flex justify-center">
+          <div className="w-full bg-gray-100 h-fit min-h-dvh flex justify-center">
                <div className="w-[80%] h-fit min-h-dvh flex flex-col gap-4 justify-start">
                     <div className="z-1 sticky top-0 right-0 left-0 bg-white rounded-b-lg flex p-2 pb-4  justify-between items-center">
                          <div className="flex gap-4 flex-col pl-4">
                               <h1 className="text-2xl font-semibold">
-                                   {data?.payload?.data?.name}
+                                   {courtData?.payload?.data?.name}
                               </h1>
                               <h2 className="text-ld font-normal">
-                                   {data?.payload?.data?.address?.city}
+                                   {courtData?.payload?.data?.address?.city}
                               </h2>
                          </div>
                          <div className="flex gap-6 pr-10">
                               <Button variant="outline" className="pl-8 pr-8 text-sky-700 border-sky-700 h-[40px] w-[160px] hover:text-sky-700 hover:cursor-pointer" size={"lg"}>Lịch trống</Button>
-                              <Button onClick={() => {router.push(`/booking/${id}`)}}
-                              variant="outline" className="pl-8 pr-8 text-white bg-sky-700 h-[40px] w-[160px] hover:bg-sky-700 hover:text-white hover:cursor-pointer " size={"lg"}>Đặt ngay</Button>
+                              <Button onClick={() => { router.push(`/booking/${id}`) }}
+                                   variant="outline" className="pl-8 pr-8 text-white bg-sky-700 h-[40px] w-[160px] hover:bg-sky-700 hover:text-white hover:cursor-pointer " size={"lg"}>Đặt ngay</Button>
                          </div>
                     </div>
 
@@ -69,10 +69,10 @@ export default function DetailCourtPage() {
                               </h1>
                               <div className="self-end">
                                    <h2 className="absolute text-4xl font-bold blur-lg text-yellow-400/60">
-                                        {(data?.payload?.data?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
+                                        {(courtData?.payload?.data?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
                                    </h2>
                                    <h2 className="text-4xl font-semibold text-primary font-roboto">
-                                        {(data?.payload?.data?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
+                                        {(courtData?.payload?.data?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
                                    </h2>
                               </div>
                          </div>

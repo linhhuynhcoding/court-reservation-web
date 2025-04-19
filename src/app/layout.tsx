@@ -31,14 +31,14 @@ export default async function RootLayout({
           data-gr-ext-installed=""
           className="text-sm"
         >
-          <ThemeProvider>
+          {/* <ThemeProvider> */}
             <AppProvider>
               <QueryProvider>
                 <Header />
                 {children}
               </QueryProvider>
             </AppProvider>
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
           <Toaster position="bottom-left" richColors />
         </body>
       </html>

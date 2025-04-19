@@ -2,7 +2,7 @@ import { z } from "zod";
 import { CategorySchema, ImageResponseSchema } from "./orther.schema";
 
 export const ProductResponseSchema = z.object({
-     id: z.number().nullable(),         // Long in Java can be null
+     id: z.number(),     
      name: z.string(),
      price: z.number(),  
      buyTurn: z.number().nullable(),

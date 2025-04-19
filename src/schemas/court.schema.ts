@@ -17,11 +17,11 @@ const AddressResponseSchema = z.object({
 });
 
 export const OrgaResponseSchema = z.object({
-     id: z.number().nullable(),
-     name: z.string().nullable(),
-     phone: z.string().nullable(),
-     numberOfCourts: z.number().nullable(),
-     price: z.number().nullable(),
+     id: z.number(),
+     name: z.string(),
+     phone: z.string(),
+     numberOfCourts: z.number(),
+     price: z.number(),
      address: AddressResponseSchema.nullable(),
      status: z.string().nullable(),
      imageCourts: z.any(),

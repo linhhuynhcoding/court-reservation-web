@@ -14,6 +14,17 @@ export const RoleValues = [
      Role.Guest
 ] as const
 
+export enum  PaymentMethod {
+     COD = "COD",
+     VNPAY = "VNPAY"
+}
+
+export enum PaymentFor {
+     ORDER= "ORDER",
+     BOOKING= "BOOKING"
+};
+
+
 export const TokenType = {
      AccessToken: 'accessToken',
      RefreshToken: 'refreshToken'
@@ -29,4 +40,6 @@ export interface TokenPayload {
 }
 
 export type RoleType = (typeof Role)[keyof typeof Role];
+// export type PaymentMethodType = (typeof PaymentMethod)[keyof typeof PaymentMethod];
+// export type PaymentForType = (typeof PaymentFor)[keyof typeof PaymentFor];
 export type TokenTypeValue = (typeof TokenType)[keyof typeof TokenType];
