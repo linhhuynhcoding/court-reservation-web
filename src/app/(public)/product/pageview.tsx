@@ -1,7 +1,7 @@
 "use client";
 
 import { PaginationFirst, PaginationLast } from '@/components/paginaiton';
-import ProductCart from '@/components/product-cart'
+import ProductCard from '@/components/product-card'
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
 import { range } from '@/lib/utils';
 import { useGetAllProducts } from '@/queries/useProduct'
@@ -67,7 +67,7 @@ export default function ProductView({ _range = [0, 100] }: { _range: number[] })
       <div className='grid 2xl:grid-cols-4 lg:grid-cols-3 gap-8'>
         {
           data?.payload?.data?.content?.map((p: ProductResponse, i: number) => {
-            return <ProductCart key={i} product={p} ></ProductCart>
+            return <ProductCard key={i} product={p} ></ProductCard>
           })
         }
       </div>

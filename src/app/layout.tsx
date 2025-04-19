@@ -29,7 +29,7 @@ export default async function RootLayout({
         <body
           data-new-gr-c-s-check-loaded="14.1229.0"
           data-gr-ext-installed=""
-          className="text-sm"
+          className="text-sm items-center"
         >
           {/* <ThemeProvider> */}
             <AppProvider>

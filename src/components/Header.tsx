@@ -12,6 +12,7 @@ import NavLink from "./NavLink";
 import { AccountType } from "../schemas/account.schema";
 import { usePathname } from "next/navigation";
 import { useAppContext } from "./app-provider";
+import { HiOutlineShoppingBag } from "react-icons/hi2";
 
 // const GLASS_MORPHISM_TAILWIND = "h-full w-full bg-white-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-20 border border-gray-100";
 
@@ -29,7 +30,7 @@ const HOME_PATHS = ['', '/', '/login', '/register'];
 export default function Header({ }): JSX.Element {
      const { account } = useAppContext();
      const pathname = usePathname();
-     const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/manager') ;
+     const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/manager');
      const isHome = HOME_PATHS.includes(pathname);
      console.log("account: ", account);
 
@@ -58,19 +59,27 @@ export default function Header({ }): JSX.Element {
 
                          }
 
-                         <li className="md:flex order-last p-2 pl-10 min-h-10 flex-1 flex justify-end gap-2 hidden">
+                         <li className="md:flex order-last p-2 pl-10 min-h-10 flex-1 flex items-center justify-end gap-2 hidden">
+
+                              {
+                                   (pathname.startsWith('/product') && account) &&
+                                   <Link href={"/cart"} className="flex items-center gap-2 transition delay-50 duration-200 ease-in-out hover:bg-blue-800 hover:text-white p-2 rounded-3xl ">
+                                        <HiOutlineShoppingBag className="text-2xl " />
+                                        Giỏ hàng
+                                   </Link >
+                              }
                               {
                                    account
                                         ? <>
-                                             <Button className={`hover:border-b-1`} asChild>
+                                             <Button className={`hover:border-b-1 h-full items-stretch`} asChild>
                                                   <Link href="/me">Hi, <i><strong>{account.username}</strong>!</i></Link>
                                              </Button>
                                         </>
                                         : <>
-                                             <Button className="hover:border-b-1  " variant={`secondary`} asChild>
+                                             <Button className="hover:border-b-1   h-full items-stretch" variant={`secondary`} asChild>
                                                   <Link href="/login">Đăng nhập</Link>
                                              </Button>
-                                             <Button className={`hover:border-b-1`} asChild>
+                                             <Button className={`hover:border-b-1 h-full items-stretch`} asChild>
                                                   <Link href="/register">Đăng ký tài khoản</Link>
                                              </Button>
                                         </>

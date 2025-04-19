@@ -6,7 +6,7 @@ import { ProductResponse } from "@/schemas/product.schema";
 
 const SAMPLE_IMAGE = product.src
 
-function ProductCart({ product = {
+function ProductCard({ product = {
      id: 1,
      buyTurn: 0,
      category: {
@@ -53,4 +53,4 @@ function ProductCart({ product = {
           </div>)
 }
 
-export default ProductCart
+export default ProductCard
