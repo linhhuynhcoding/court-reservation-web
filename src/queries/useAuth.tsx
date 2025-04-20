@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import authApi from "../apis/auth"
+import { queryClient } from "@/components/QueryProvider"
 
 export const useLoginMutation = () => {
      return useMutation({
@@ -9,7 +10,13 @@ export const useLoginMutation = () => {
 
 export const useRegisterMutation = () => {
      return useMutation({
-          mutationFn: authApi.register
+          mutationFn: authApi.register,
+          onSuccess: () => {
+               queryClient.invalidateQueries({
+                    queryKey: ['account-me']
+               })
+          }
+
      })
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -74,10 +75,12 @@ const CartPage: React.FC = () => {
                     <div className="bg-red-100 flex flex-col gap-4">
                          <div className="p-4 bg-white grid grid-cols-[0.5fr_1fr_2fr_1fr_1fr_1fr_0.3fr] border justify-stretch justify-items-center">
                               <div><Checkbox /></div>
-                              <div className="text-left w-full items-left col-span-2"><span>Sản phẩm</span></div>
+                              <div className="text-left w-32 items-left flex-1"><span>Sản phẩm</span></div>
+                              <div className="text-left w-full items-left"><span></span></div>
                               <div className="text-left w-full items-left"><span>Số lượng</span></div>
                               <div className="text-left w-full items-left"><span>Đơn giá</span></div>
                               <div className="text-left w-full items-left"><span>Giá tiền</span></div>
+                              <div className="text-left w-full items-left"><span></span></div>
                          </div>
                          <div className="flex flex-col gap-4 h-full">
                               {
@@ -129,7 +132,7 @@ const CartPage: React.FC = () => {
                               </div>
                          </div>
                          <div className="pt-3 w-full">
-                              <Button className="w-full border border-blue-900 hover:bg-blue-900 hover:text-white hover:cursor-pointer" variant={"outline"}>Mua hàng</Button>
+                              <Button disabled={!items.filter((i: any) => i.selected)?.length} onClick={() => {router.push("/checkout")}} className="w-full border border-blue-900 hover:bg-blue-900 hover:text-white hover:cursor-pointer" variant={"outline"}>Mua hàng</Button>
                          </div>
                     </div>
                </div>

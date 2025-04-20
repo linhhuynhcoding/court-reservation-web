@@ -9,12 +9,12 @@ const nextConfig: NextConfig = {
         protocol: "https"
       },
       {
-        hostname: "img.courtsite.my",
-        protocol: "https"
+        hostname: "res.cloudinary.com",
+        protocol: "http"
       },
       {
         hostname: "res.cloudinary.com",
-        protocol: "http"
+        protocol: "https"
       },
       {
         hostname: "avatar.iran.liara.run",

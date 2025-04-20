@@ -6,3 +6,9 @@ export const usePlaceOrderBookingMutation = () => {
           mutationFn: apiOrder.placeOrderBooking
      })
 }
+
+export const usePlaceOrderMutation = () => {
+     return useMutation({
+          mutationFn: apiOrder.placeOrder
+     })
+}

@@ -16,11 +16,13 @@ import sample from "@/assets/sample.webp"
 const SAMPLE_IMAGE = sample.src;
 
 import Image from "next/image";
+import { useMemo } from "react";
 
 export default function DetailCourtPage() {
      const router = useRouter();
      const { id: _id } = useParams();
      const { data: courtData } = useGetCourt(Number(_id), !!_id);
+     const court = useMemo(() => courtData?.payload?.data ?? {}, [courtData]);
 
      return (
           <div className="w-full bg-gray-100 h-fit min-h-dvh flex justify-center">
@@ -28,10 +30,10 @@ export default function DetailCourtPage() {
                     <div className="z-1 sticky top-0 right-0 left-0 bg-white rounded-b-lg flex p-2 pb-4  justify-between items-center">
                          <div className="flex gap-4 flex-col pl-4">
                               <h1 className="text-2xl font-semibold">
-                                   {courtData?.payload?.data?.name}
+                                   {court?.name}
                               </h1>
                               <h2 className="text-ld font-normal">
-                                   {courtData?.payload?.data?.address?.city}
+                                   {court?.address?.city}
                               </h2>
                          </div>
                          <div className="flex gap-6 pr-10">
@@ -43,19 +45,19 @@ export default function DetailCourtPage() {
 
                     <div className="z-0 grid grid-rows-2 grid-cols-4 h-82 gap-2 items-stretch justify-stretch">
                          <div className="relative h-[100%] rounded-lg min-h-[120px] bg-red-400 row-span-2 col-span-2">
-                              <Image src={SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
+                              <Image src={court?.imageCourts?.[0]?.image_url ?? SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
                          </div>
                          <div className="relative h-[100%] rounded-lg min-h-[120px] bg-red-400">
-                              <Image src={SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
+                              <Image src={court?.imageCourts?.[1]?.image_url ?? SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
                          </div>
                          <div className="relative h-[100%] rounded-lg min-h-[120px] bg-red-400">
-                              <Image src={SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
+                              <Image src={court?.imageCourts?.[2]?.image_url ?? SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
                          </div>
                          <div className="relative h-[100%] rounded-lg min-h-[120px] bg-red-400">
-                              <Image src={SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
+                              <Image src={court?.imageCourts?.[1]?.image_url ?? SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
                          </div>
                          <div className="relative h-[100%] rounded-lg min-h-[120px] bg-red-400">
-                              <Image src={SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
+                              <Image src={court?.imageCourts?.[2]?.image_url ?? SAMPLE_IMAGE} className="rounded-sm" objectFit="cover" fill alt="" ></Image>
                          </div>
 
                     </div>
@@ -67,10 +69,10 @@ export default function DetailCourtPage() {
                               </h1>
                               <div className="self-end">
                                    <h2 className="absolute text-4xl font-bold blur-lg text-yellow-400/60">
-                                        {(courtData?.payload?.data?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
+                                        {(court?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
                                    </h2>
                                    <h2 className="text-4xl font-semibold text-primary font-roboto">
-                                        {(courtData?.payload?.data?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
+                                        {(court?.price as number ?? 10000).toLocaleString("vi-VN")}<u>đ</u> /giờ
                                    </h2>
                               </div>
                          </div>
