@@ -1,4 +1,5 @@
 import cartApi from "@/apis/cart";
+import { queryClient } from "@/components/QueryProvider";
 import { UpdateItemPayload } from "@/schemas/cart.schema";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -7,10 +8,10 @@ import { useMutation, useQuery } from "@tanstack/react-query";
  * @param id ID của giỏ hàng
  * @param enabled Bật / tắt việc tự động gọi query
  */
-export const useGetCart = (id: number, enabled: boolean) => {
+export const useGetCart = (id: number, token: string, enabled: boolean) => {
   return useQuery({
-    queryKey: ['get-cart', id],
-    queryFn: () => cartApi.getCart(id),
+    queryKey: ['get-cart', id, token],
+    queryFn: () => cartApi.getCart(id, token),
     staleTime: 60 * 3 * 1000,
     enabled,
   });
@@ -22,6 +23,9 @@ export const useGetCart = (id: number, enabled: boolean) => {
 export const useCreateOrUpdateCartItemMutation = () => {
   return useMutation({
     mutationFn: cartApi.createOrUpdateCartItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['get-cart']})
+    }
   });
 };
 
@@ -31,5 +35,8 @@ export const useCreateOrUpdateCartItemMutation = () => {
 export const useDeleteCartItemMutation = () => {
   return useMutation({
     mutationFn: cartApi.deleteCartItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['get-cart']})
+    }
   });
 };

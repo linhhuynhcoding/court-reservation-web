@@ -11,7 +11,10 @@ const cartApi = {
    * @param (path) id ID của giỏ hàng
    * @returns 
    */
-  getCart: (id: number) => http.get<unknown>(`${CART_ENDPOINT}/${id}`, {}),
+  getCart: (id: number, token: string) => http.get<unknown>(`${CART_ENDPOINT}/${id}`, {
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+
+  }),
 
   /**
    * Tạo hoặc cập nhật sản phẩm trong giỏ hàng
@@ -20,8 +23,8 @@ const cartApi = {
    * @param (body) UpdateItemPayload Dữ liệu sản phẩm cần cập nhật
    * @returns 
    */
-  createOrUpdateCartItem: ({id, payload}:{id: number, payload: UpdateItemPayload}) => http.post<unknown>(`${CART_ENDPOINT}/${id}`, {
-    headers: { "Content-Type": "application/json" },
+  createOrUpdateCartItem: ({id, payload, token}:{id: number, payload: UpdateItemPayload, token: string}) => http.post<unknown>(`${CART_ENDPOINT}/${id}`, {
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}`  },
     body: JSON.stringify(payload),
   }),
 
@@ -32,8 +35,8 @@ const cartApi = {
    * @param (query) itemId ID của sản phẩm cần xóa
    * @returns 
    */
-  deleteCartItem: ({id, itemId} : {id: number, itemId: number}) => http.delete<unknown>(`${CART_ENDPOINT}/${id}?itemId=${itemId}`, {
-    headers: { "Content-Type": "application/json" },
+  deleteCartItem: ({id, itemId, token} : {id: number, itemId: number, token: string}) => http.delete<unknown>(`${CART_ENDPOINT}/${id}?itemId=${itemId}`, {
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
   }),
 }
 

@@ -6,20 +6,27 @@ import { ProductResponse } from "@/schemas/product.schema";
 
 const SAMPLE_IMAGE = product.src
 
-function ProductCard({ product = {
-     id: 1,
-     buyTurn: 0,
-     category: {
-          id: 0,
-          name: "EQUIPMENT"
-     },
-     image: { image_url: SAMPLE_IMAGE, status: "ACTIVE", type: "ORGINAL", height: 10, width: 10, id: 1 },
-     name: "Vợt Pickleball - 500 xanh dương",
-     price: 1199000,
-     stock: 100
+interface Props {
+     product?: ProductResponse;
+     onAddToCart: (id: number) => void;
+}
 
-} }: { product?: ProductResponse }) {
-     
+const ProductCard: React.FC<Props> = ({
+     product = {
+          id: 1,
+          buyTurn: 0,
+          category: {
+               id: 0,
+               name: "EQUIPMENT"
+          },
+          image: { image_url: SAMPLE_IMAGE, status: "ACTIVE", type: "ORGINAL", height: 10, width: 10, id: 1 },
+          name: "Vợt Pickleball - 500 xanh dương",
+          price: 1199000,
+          stock: 100
+     },
+     onAddToCart = (id: number) => { },
+}) => {
+
      return (
           <div className={`relative bg-white flex flex-col justify-self-stretch border border-xs border-gray-200
  md:w-3xs w-xs p-3 gap-2 max-h-[500px] hover:cursor-pointer`}>
@@ -32,7 +39,7 @@ function ProductCard({ product = {
                     <div className="flex items-end">
                          <span className="font-normal text-lg">
                               {Math.round(product.price).toLocaleString("vi")} <u>đ</u>
-                              </span>
+                         </span>
                     </div>
                     <h3 className="font-bold tracking-wide lg:text-md">
                          {product.name}
@@ -45,7 +52,7 @@ function ProductCard({ product = {
                          <span className="flex items-center gap-2 font-bold text-lg">
                               ADIASS
                          </span>
-                         <span className="flex items-center gap-2 transition delay-50 duration-200 ease-in-out hover:bg-blue-800 hover:text-white p-2 rounded-3xl ">
+                         <span onClick={() => onAddToCart(product.id)} className="flex items-center gap-2 transition delay-50 duration-200 ease-in-out hover:bg-blue-800 hover:text-white p-2 rounded-3xl ">
                               <HiOutlineShoppingBag className="text-2xl " />
                          </span>
                     </div>
