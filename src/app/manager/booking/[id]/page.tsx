@@ -7,9 +7,7 @@ import { ScheduelBooking } from "./schedule";
 
 export default function CourtDetail() {
      const { id: _id } = useParams();
-     const id = typeof _id === "string" ? _id : "";
-
-     const { data } = useGetCourt(id, !!id);
+     const { data } = useGetCourt(Number(_id), !!_id);
 
      return (
           <div className="flex flex-col pl-5 pr-5 gap-4">
