@@ -62,12 +62,12 @@ export const OrderDrinkForm: React.FC = () => {
                     <Carousel
                          className=''
                     >
-                         <CarouselContent className='relative flex overflow-visiable p-4'>
+                         <CarouselContent className='relative flex overflow-visiable p-4 pb-8'>
                               {
                                    isLoading ? "" :
                                         products?.map((product, index) => {
                                              return (
-                                                  <CarouselItem key={index} className="w-fit 2xl:basis-1/3 basis-1/2">
+                                                  <CarouselItem key={index} className="w-fit xl:basis-1/3 basis-1/2">
                                                        <DrinkCart product={product} onQuantityChange={(quantity) => handleQuantityCount(quantity, product.id, product.name, product.price)} ></DrinkCart>
                                                   </CarouselItem>
                                              )

@@ -82,7 +82,7 @@ export default function BookingPage() {
      }
 
      return (
-          <div className="md:w-[60%] w-[80%] mt-4 flex flex-col gap-6">
+          <div className="md:w-[80%] w-[80%] mt-4 flex flex-col gap-6">
 
                {/* PROCESS BAR */}
                <div className="flex justify-start gap-2  w-full font-normal text-md">
