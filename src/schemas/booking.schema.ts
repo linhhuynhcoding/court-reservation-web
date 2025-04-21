@@ -32,5 +32,21 @@ export const BookingFormSchema = PlaceBookingPayloadSchema.omit({
      courtId: z.string(),
 });
 
+export const BookingResponseSchema = z.object({
+     id: z.number().int().nullable(),
+     orderId: z.number().int().nullable(),
+     orgaId: z.number().int().nullable(),
+     orgaName: z.string().nullable(),
+     timeStart: z.string().datetime({ offset: false }), // ISO string with offset
+     timeEnd: z.string().datetime({ offset: false }),
+     status: z.string(),
+     payment: z.any(),
+     bookingStatus: z.string(), 
+     courtId: z.number().int().nullable(),
+     courtName: z.string().nullable(),
+});
+
+export type BookingResponse = z.infer<typeof BookingResponseSchema>;
+
 export type PlaceBookingPayload = z.infer<typeof PlaceBookingPayloadSchema>;
 export type BookingFormPayload = z.infer<typeof BookingFormSchema>;

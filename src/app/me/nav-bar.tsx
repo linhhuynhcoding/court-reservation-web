@@ -16,7 +16,7 @@ export function NavBar() {
      const { account } = useAppContext();
 
      return (
-          <nav className="w-full flex flex-col justify-start basis-1/3 border">
+          <nav className="w-full flex flex-col justify-start basis-1/3 border rounded-lg">
                <div className="border-b  w-full flex flex-col justify-center gap-2 p-4 h-fit">
                     <div className="relative aspect-square m-4">
                          <Image src="https://avatar.iran.liara.run/public/31"

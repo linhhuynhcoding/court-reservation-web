@@ -16,7 +16,7 @@ export default function RootLayout({
     <main className="flex justify-center w-full p-5">
       <div className="w-[60%] flex justify-between gap-4 min-h-[800px]">
         <NavBar></NavBar>
-        <div className="w-full basis-2/3 border">
+        <div className="w-full basis-2/3 border rounded-lg">
           {children}
         </div>
       </div>

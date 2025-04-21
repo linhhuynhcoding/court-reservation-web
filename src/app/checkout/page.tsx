@@ -56,7 +56,13 @@ const CheckoutPage: React.FC = () => {
                }
 
                const payload: PlaceOrderPayload = {
-                    ...getValues(),
+                    createAddressPayload: {
+                         ...getValues().createAddressPayload,
+                         city: getValues().createAddressPayload.city?.split(",")?.[0] ?? "",
+                         district: getValues().createAddressPayload.district?.split(",")?.[0] ?? "",
+                         ward: getValues().createAddressPayload.ward?.split(",")?.[0] ?? "",
+                         addressLine: getValues().createAddressPayload.addressLine?.split(",")?.[0] ?? "",
+                    },
                     paymentMethod: payment
                }
 
@@ -71,9 +77,9 @@ const CheckoutPage: React.FC = () => {
 
      return (
           <div className="w-full bg-gray-100 min-h-dvh flex justify-center">
-               <div className="w-[70%] bg-pink-100 min-h-[400px] p-4 grid grid-cols-[2fr_1fr] gap-4">
-                    <div className="bg-red-100 flex flex-col gap-4">
-                         <div className="bg-red-100 flex flex-col">
+               <div className="w-[70%] min-h-[400px] p-4 grid grid-cols-[2fr_1fr] gap-4">
+                    <div className="flex flex-col gap-4">
+                         <div className="flex flex-col">
                               <div className="p-4 bg-white border mb-4">
                                    <div className="mb-4">
                                         <h1 className="text-lg font-semibold">Địa chỉ giao hàng</h1>
@@ -104,6 +110,8 @@ const CheckoutPage: React.FC = () => {
                                         items?.length ?
                                              // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                              items.map((item: any, index: number) => {
+                                                  if (!item.selected) return;
+
                                                   return <CartItem key={index} item={item}
                                                        disabled={true}
                                                   >

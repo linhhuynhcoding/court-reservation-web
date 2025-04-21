@@ -71,8 +71,8 @@ const CartPage: React.FC = () => {
 
      return (
           <div className="w-full bg-gray-100 min-h-dvh flex justify-center">
-               <div className="w-[70%] bg-pink-100 min-h-[400px] p-4 grid grid-cols-[2fr_1fr] gap-4">
-                    <div className="bg-red-100 flex flex-col gap-4">
+               <div className="w-[70%] min-h-[400px] p-4 grid grid-cols-[2fr_1fr] gap-4">
+                    <div className="flex flex-col gap-4">
                          <div className="p-4 bg-white grid grid-cols-[0.5fr_1fr_2fr_1fr_1fr_1fr_0.3fr] border justify-stretch justify-items-center">
                               <div><Checkbox /></div>
                               <div className="text-left w-32 items-left flex-1"><span>Sản phẩm</span></div>

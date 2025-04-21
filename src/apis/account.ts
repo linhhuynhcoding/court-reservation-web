@@ -1,6 +1,6 @@
 import { BaseFilter } from "@/schemas/filter.schemas";
 import { http } from "../lib/http";
-import { AccountResType } from "../schemas/account.schema";
+import { AccountResType, AccountUpdatePayload } from "../schemas/account.schema";
 import { toQueryString } from "@/lib/utils";
 
 const accountApi = {
@@ -11,7 +11,7 @@ const accountApi = {
       * @returns AccountResType Thông tin người dùng
       */
      me: () => http.get<AccountResType>('/auth/me', {
-          headers:  { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" },
      }),
 
      /**
@@ -35,7 +35,20 @@ const accountApi = {
       */
      getAccountsByRole: (role: string, filter: BaseFilter) => http.get<unknown>(`/accounts/role${toQueryString(filter)}&role=${role}`, {}),
 
-     
+     /**
+      * @type Next Client to Server
+      * @description Cập nhật thông tin tài khoản
+      * @param id ID của tài khoản
+      * @param payload Dữ liệu cập nhật tài khoản
+      * @returns AccountResType Thông tin tài khoản sau khi cập nhật
+      */
+     updateAccount: ({ id, payload, accessToken }: { id: number, payload: AccountUpdatePayload, accessToken: string }) => http.patch<AccountResType>(`/accounts/${id}`, {
+          headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(payload)
+     }),
 }
 
 export default accountApi;

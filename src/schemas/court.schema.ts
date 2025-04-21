@@ -6,7 +6,7 @@ const CourtResponseSchema = z.object({
      name: z.string().nullable(),
 });
 
-const AddressResponseSchema = z.object({
+export const AddressResponseSchema = z.object({
      id: z.number().nullable(),
      city: z.string().nullable(),
      district: z.string().nullable(),
