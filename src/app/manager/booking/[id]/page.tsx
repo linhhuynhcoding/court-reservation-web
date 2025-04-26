@@ -3,7 +3,7 @@
 
 import { useParams } from "next/navigation";
 import { useGetCourt } from "@/queries/useCourt";
-import { ScheduelBooking } from "./schedule";
+import { ScheduelBooking } from "../schedule";
 
 export default function CourtDetail() {
      const { id: _id } = useParams();

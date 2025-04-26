@@ -17,7 +17,7 @@ interface Props {
      booking: BookingResponse
 }
 
-export const BookingItem: React.FC<Props> = ({ booking }) => {
+export const BookingItemManager: React.FC<Props> = ({ booking }) => {
 
      // === MEMO ===
      const timeStart = useMemo(() => {

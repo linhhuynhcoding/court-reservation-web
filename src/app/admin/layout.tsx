@@ -4,11 +4,10 @@ const herfs = [
      { name: 'Trang chủ', href: '/admin' },
      { name: 'Quản lý sân', href: '/admin/court', children: [
           {name: 'Thêm sân', href: '/admin/court/add'},
-          {name: 'Add Organisation', href: '/admin/court/   '},
-          {name: 'Add Organisation', href: '/admin/court/   '},
-          {name: 'Add Organisation', href: '/admin/court/   '},
+          {name: 'Thêm quản lý sân', href: '/admin/court/addManager'},
      ] },
      {name: 'Quản lý tài khoản ', href: '/admin/account'},
+     {name: 'Quản lý sản phẩm ', href: '/admin/product'},
      { name: 'Thông tin', href: '/admin/about' },
 ]
 

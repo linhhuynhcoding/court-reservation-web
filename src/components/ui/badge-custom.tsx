@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Badge } from "./badge";
 
 interface VariantType {
@@ -28,12 +29,13 @@ const Variants: VariantType = {
 
 interface Props {
      variant: string;
+     children?: ReactNode
 }
 
-const BadgeCustom: React.FC<Props> = ({variant}) => {
+const BadgeCustom: React.FC<Props> = ({variant, children}) => {
      return (
           <Badge variant="outline" className={`border-none bg-yellow-500 text-white font-light ${Variants[variant].style}`}>
-               {Variants[variant].content}
+               {children ?? Variants[variant].content}
           </Badge>
 
      )

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AccountRes } from "./account.schema";
 
 export const PlaceBookingPayloadSchema = z.object({
      accountId: z.number().optional(),
@@ -13,8 +14,6 @@ export const PlaceBookingPayloadSchema = z.object({
 
      timeStart: z.string({
           required_error: "timeStart is required",
-     }).refine(val => !isNaN(Date.parse(val)), {
-          message: "Định dạng không hợp lệ",
      }),
 
      duration: z.string()
@@ -36,14 +35,16 @@ export const BookingResponseSchema = z.object({
      id: z.number().int().nullable(),
      orderId: z.number().int().nullable(),
      orgaId: z.number().int().nullable(),
+     image: z.any(),
      orgaName: z.string().nullable(),
-     timeStart: z.string().datetime({ offset: false }), // ISO string with offset
-     timeEnd: z.string().datetime({ offset: false }),
+     timeStart: z.string(), // ISO string with offset
+     timeEnd: z.string(),
      status: z.string(),
      payment: z.any(),
      bookingStatus: z.string(), 
      courtId: z.number().int().nullable(),
      courtName: z.string().nullable(),
+     account: AccountRes,
 });
 
 export type BookingResponse = z.infer<typeof BookingResponseSchema>;

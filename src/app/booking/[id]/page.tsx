@@ -28,6 +28,7 @@ const SAMPLE_IMAGE = sample.src;
 
 // TODO: CẦN PHẢI REFACTOR LẠI, CẤU TRÚC COMPONENT CHƯA ỔN
 export default function BookingPage() {
+     const router = useRouter();
      const { id: _id } = useParams();
      const { data } = useGetCourt(Number(_id), !!_id);
      const { info, process, changeProcess } = useInfoContext();
@@ -54,6 +55,8 @@ export default function BookingPage() {
 
                log.info(response);
                changeProcess(3);
+
+               router.push("/me")
           }
           catch (error) {
                handleErrorApi({ error });

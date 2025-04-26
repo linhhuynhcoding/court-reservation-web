@@ -16,6 +16,8 @@ const courtApi = {
       */
      getCourt: (id?: number) => http.get<unknown>(`${COURT_ENDPOINT}/${id}`, {}),
 
+     getCourtByManagerId: (id?: number) => http.get<unknown>(`${COURT_ENDPOINT}/manager/${id}`, {}),
+
      /**
       * Lấy danh sách sân, kèm pagination
       * Next Client to Server
@@ -31,8 +33,11 @@ const courtApi = {
       * @returns 
       */
 
-     createCourt: (payload: CreateCourtPayload) => http.post<unknown>(`${COURT_ENDPOINT}`, {
-          headers: { "Content-Type": "application/json" },
+     createCourt: ({ payload, token }: { payload: CreateCourtPayload, token: string }) => http.post<unknown>(`${COURT_ENDPOINT}`, {
+          headers: {
+               "Content-Type": "application/json",
+               "Authorization": `Bearer ${token}`
+          },
           body: JSON.stringify(payload)
      }),
 

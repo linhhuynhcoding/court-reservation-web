@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { decodeToken, getAccessTokenFromLocalStorage, handleErrorApi } from "../lib/utils";
 import { RoleType } from "../constants/types";
 import { AccountResType, AccountType } from "../schemas/account.schema";
@@ -8,13 +8,15 @@ import authApi from "../apis/auth";
 import accountApi from "../apis/account";
 import { QueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useMe } from "@/queries/useAccount";
+import { useRouter } from "next/navigation";
 
 
 const AppContext = createContext<{
      isAuth: boolean;
      account: AccountType | null;
      role: RoleType | null;
-     setAccount: (account: AccountType) => void;
+     setAccount: (account: AccountType | null) => void;
      setRole: (role: RoleType) => void;
 }>({
      isAuth: false,
@@ -29,6 +31,7 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
+     const router = useRouter()
      const [account, setUserState] = useState<AccountType | null>(() => {
           return null
      })
@@ -36,21 +39,20 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
           return null
      })
 
-     useEffect(() => {
-          const accessToken = getAccessTokenFromLocalStorage();
-          if (accessToken) {
-               const fetchAccount = async () => await accountApi.sme(accessToken);
+     const accessToken = getAccessTokenFromLocalStorage();
+     const { data } = useMe(accessToken ?? "");
+     const _account = useMemo(() => data?.payload?.data ?? null, [data]);
 
-               fetchAccount().then(({ payload }) => {
-                    const _account = (payload?.data as AccountType);
-                    const { role } = decodeToken(accessToken)
-                    setUserState(_account);
-                    setRoleState(role);
-               }).catch(e => {
-                    handleErrorApi({ error: "Lỗi server!" })
-               });
+     useEffect(() => {
+          if (accessToken && _account) {
+               const { role } = decodeToken(accessToken)
+               setUserState(_account);
+               setRoleState(role);
           }
-     }, []);
+          else {
+               // router.push("/login");
+          }
+     }, [_account]);
 
      return (
           <AppContext value={{ isAuth: !!account, account, role, setAccount: setUserState, setRole: setRoleState }}>

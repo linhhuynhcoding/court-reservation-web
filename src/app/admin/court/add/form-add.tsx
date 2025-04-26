@@ -14,7 +14,7 @@ import {
      SelectItem,
 } from "@/components/ui/select";
 import { Controller, useForm } from "react-hook-form"
-import { cn, genCourtName } from "@/lib/utils";
+import { cn, genCourtName, getAccessTokenFromLocalStorage } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import imgApi from "@/apis/image";
@@ -59,6 +59,7 @@ export default function FormAddCourt() {
           console.log("payload: ", values)
           setIsDisabled(true);
           try {
+               const token = getAccessTokenFromLocalStorage();
                let body = {
                     ...values,
                     address: {
@@ -85,7 +86,7 @@ export default function FormAddCourt() {
                     }
                }
 
-               const uploadCourtResponse = await useCreateCourtMutation.mutateAsync(body);
+               const uploadCourtResponse = await useCreateCourtMutation.mutateAsync({ payload: body, token: token! });
 
                console.log(uploadCourtResponse);
 
@@ -169,7 +170,7 @@ export default function FormAddCourt() {
                                    name="address.district"
                                    control={control}
                                    render={({ field }) => (
-                                        <Select 
+                                        <Select
                                              disabled={isDisabled}
                                              onValueChange={field.onChange}
                                              value={field.value ?? undefined}

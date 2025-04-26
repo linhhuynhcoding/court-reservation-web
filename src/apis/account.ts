@@ -2,6 +2,7 @@ import { BaseFilter } from "@/schemas/filter.schemas";
 import { http } from "../lib/http";
 import { AccountResType, AccountUpdatePayload } from "../schemas/account.schema";
 import { toQueryString } from "@/lib/utils";
+import { AddAccountPayload } from "@/schemas/auth.schema";
 
 const accountApi = {
 
@@ -10,8 +11,11 @@ const accountApi = {
       * @description Lấy thông tin người dùng từ server (thêm token trung gian)
       * @returns AccountResType Thông tin người dùng
       */
-     me: () => http.get<AccountResType>('/auth/me', {
-          headers: { "Content-Type": "application/json" },
+     me: (accessToken: string) => http.get<AccountResType>('/auth/me', {
+          headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${accessToken}`,
+          },
      }),
 
      /**
@@ -49,6 +53,15 @@ const accountApi = {
           },
           body: JSON.stringify(payload)
      }),
+
+     addAccount: ({ payload, accessToken }: { payload: AddAccountPayload, accessToken: string }) => http.post<AccountResType>(`/accounts`, {
+          headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(payload)
+     }),
+
 }
 
 export default accountApi;

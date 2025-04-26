@@ -3,6 +3,7 @@ import { http } from "../lib/http";
 import { AccountResType } from "../schemas/account.schema";
 import { LoginBodyType, LoginResType, RegisterBodyType } from "../schemas/auth.schema";
 import { ErrorResType } from "../schemas/global.schemas";
+import { setAccessTokenToLocalStorage } from "@/lib/utils";
 
 const AUTH_ENDPOINT = '/auth';
 
@@ -31,6 +32,16 @@ const authApi = {
           body: JSON.stringify(body),
           headers: { "Content-Type": "application/json" },
      }),
+
+     // Next Client to Next Server
+     logout: () => {
+          setAccessTokenToLocalStorage("");
+          return http.post('/api/auth/logout', {
+               baseUrl: "",
+               headers: { "Content-Type": "application/json" },
+          });
+     }
+
 }
 
 export default authApi;

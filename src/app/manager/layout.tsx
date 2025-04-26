@@ -1,12 +1,10 @@
+import { ManagerProvider } from "@/components/manager-provider";
 import NavLink from "@/components/NavLink";
 
 const herfs = [
      { name: 'Trang chủ', href: '/manager' },
      {
           name: 'Booking', href: '/manager/booking', children: [
-               { name: 'Add Organisation', href: '/manager/court/   ' },
-               { name: 'Add Organisation', href: '/manager/court/   ' },
-               { name: 'Add Organisation', href: '/manager/court/   ' },
           ]
      },
      { name: 'Thông tin', href: '/manager/about' },
@@ -27,7 +25,7 @@ export default function Layout({
                                         hover_style="hover:bg-orange-300 hover:text-white rounded-sm"
                                         focus_style="bg-orange-400 text-white  rounded-sm"
                                         style="flex items-center p-2 pl-3 font-semibold" />
-                                           {/* <li>
+                                   {/* <li>
                                         <Link
                                              herf='/'
                                              
@@ -64,7 +62,11 @@ export default function Layout({
                               </ul>
                          </div>
                     </aside>
-                    <main className='col-span-5 h-full py-4 px-3 bg-gray-50'>{children}</main>
+                    <main className='col-span-5 h-full py-4 px-3 bg-gray-50'>
+                         <ManagerProvider>
+                              {children}
+                         </ManagerProvider>
+                    </main>
                </div>
           </>
      );

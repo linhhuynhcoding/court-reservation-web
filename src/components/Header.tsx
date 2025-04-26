@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX } from "react"
+import { JSX, useMemo } from "react"
 import logo from '@/assets/logotitle.png'
 import { GiHamburgerMenu } from "react-icons/gi";
 
@@ -13,6 +13,12 @@ import { AccountType } from "../schemas/account.schema";
 import { usePathname } from "next/navigation";
 import { useAppContext } from "./app-provider";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { IoMdNotifications } from "react-icons/io";
+import { Badge } from "./ui/badge";
+import { getAccessTokenFromLocalStorage } from "@/lib/utils";
+import { useGetUserNoti } from "@/queries/useNoti";
+import { NotiResponse } from "@/schemas/noti.schema";
+import { Notification } from '@/components/Notification'
 
 // const GLASS_MORPHISM_TAILWIND = "h-full w-full bg-white-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-20 border border-gray-100";
 
@@ -53,7 +59,7 @@ export default function Header({ }): JSX.Element {
                                              <GiHamburgerMenu />
                                         </div>
                                         <ol className="xl:flex hidden flex-1 flex justify-center items-center gap-8">
-                                             <NavLink hrefs={HREFS} style="font-light"></NavLink>
+                                             <NavLink hrefs={HREFS} style="font-light text-base"></NavLink>
                                         </ol>
                                    </li>
 
@@ -67,6 +73,12 @@ export default function Header({ }): JSX.Element {
                                         <HiOutlineShoppingBag className="text-2xl " />
                                         Giỏ hàng
                                    </Link >
+                              }
+                              {
+                                   account
+                                        ?
+                                        <Notification />
+                                        : null
                               }
                               {
                                    account

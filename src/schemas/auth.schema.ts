@@ -21,9 +21,14 @@ export const RegisterBody = z.object({
      password: z.string().regex(RegExp("^(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]+$")),
      confirmPassword: z.string(),
 })
-     .refine((data) => data.password === data.confirmPassword, {
-          message: "Passwords don't match",
-     });
+
+
+export const AddAccountPayloadSchema = RegisterBody.extend({
+     role: z.string(),
+     orgaId: z.number()
+}).omit({
+     confirmPassword: true,
+});
 
 export const JwtTokenRes = z.object({
      data: z.object({
@@ -36,5 +41,6 @@ export const JwtTokenRes = z.object({
 export type LoginBodyType = z.infer<typeof LoginBody>;
 export type RegisterBodyType = z.infer<typeof RegisterBody>;
 export type JwtTokenResType = z.infer<typeof JwtTokenRes>;
+export type AddAccountPayload = z.infer<typeof AddAccountPayloadSchema>;
 
 export type LoginResType = z.infer<typeof LoginRes>;

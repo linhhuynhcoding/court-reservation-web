@@ -14,3 +14,16 @@ export const useGetAccountBookings = ({ id, filter, token }: { id: number, filte
           queryFn: () => bookingApi.getAllUserBookings({ id, filter, token })
      })
 }
+
+export const useGetCourtBookings = (id: number, filter: BookingFilter, token: string ) => {
+     return useQuery({
+          queryKey: ['get-court-bookings', { id, filter, token }, filter],
+          queryFn: () => bookingApi.getAllCourtBookings({ id, filter, token })
+     })
+}
+
+export const useUpdateStatusBookingMutation = () => {
+     return useMutation({
+          mutationFn: bookingApi.updateBookingStatus
+     })
+}

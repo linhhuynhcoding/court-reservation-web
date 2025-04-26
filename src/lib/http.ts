@@ -56,7 +56,7 @@ const request = async <Response>(method: HttpMethod, url: string, options?: Cust
           // 'Content-Type': 'application/json',
      }
 
-     const baseUrl = options?.baseUrl ?? envConfig.NEXT_PUBLIC_SERVER_URL;
+     const baseUrl = typeof options?.baseUrl === "undefined" ? envConfig.NEXT_PUBLIC_SERVER_URL : "";
 
      const fullUrl = url.startsWith('/') ? `${baseUrl}${url}` : `${baseUrl}/${url}`;
 

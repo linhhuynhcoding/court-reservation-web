@@ -33,7 +33,7 @@ export const CourtFilterSchema = z.object({
      page: z.number().min(0).max(10000).default(0),
 
      pageSize: z.number().min(10).max(50).default(12),
-
+     status: z.string().nullable().optional().default("OPENING"),
      dateTime: z.string().nullable().optional(),
      search: z.string().nullable().optional(),
      location: z.string().nullable().optional()
@@ -66,20 +66,38 @@ export const ProductFilterSchema = z.object({
 export const BookingFilterSchema = z.object({
      sort: z
           .string()
-          .regex(/^\[((\[[A-Z]{2,8}),(ASC|DESC)\])(,(\[[A-Z]{2,8}),(ASC|DESC)\]){0,4}\]$/, {
-               message: "Sort phải đúng định dạng [[FIELD,ASC|DESC],...] tối đa 5 phần tử",
-          })
-          .default("[[ID,ASC]]"),
+          .regex(
+               /^\[((\[[A-Z]{2,8}),(ASC|DESC)\])(,((\[[A-Z]{2,8}),(ASC|DESC)\])){0,4}\]$/,
+               {
+                    message: 'Invalid sort format',
+               }
+          )
+          .default('"[[DATE,DESC]]"'),
+
      page: z
           .number()
-          .min(0, { message: "Page phải lớn hơn hoặc bằng 0" })
-          .max(1000, { message: "Page tối đa là 1000" })
+          .int()
+          .min(0)
+          .max(1000)
           .default(0),
+
      pageSize: z
           .number()
-          .min(10, { message: "Page size tối thiểu là 10" })
-          .max(50, { message: "Page size tối đa là 50" })
+          .int()
+          .min(10)
+          .max(50)
           .default(10),
+
+     duration: z
+          .number()
+          .int()
+          .min(-7)
+          .max(360)
+          .default(1),
+
+     id: z.number().int().nullable().optional(),
+
+     orgaId: z.number().int().nullable().optional(),
 });
 
 export type BaseFilter = z.infer<typeof BaseFilterSchema>;

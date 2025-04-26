@@ -52,6 +52,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   --animate-scale: bg-scale 10s infinite;
+  --animate-popup: popup 1s;
 
   @keyframes bg-scale {
     0% {
@@ -61,6 +62,16 @@
       transform: scale(1.2);
     }
   }
+
+  @keyframes popup {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
 }
 
 body {

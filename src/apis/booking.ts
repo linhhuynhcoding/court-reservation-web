@@ -32,4 +32,20 @@ export const bookingApi = {
                     "Authorization": `Bearer ${token}`
                },
           }),
+
+     getAllCourtBookings: ({ id, filter, token }: { id: number, filter: BookingFilter, token: string }) =>
+          http.get<unknown>(`/courts/${id}/bookings${toQueryString(filter)}`, {
+               headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+               },
+          }),
+
+     updateBookingStatus: ({ id, status, token }: { id: number, status: string, token: string }) => http.post<unknown>(`/bookings/${id}/update-status`, {
+          headers: {
+               "Content-Type": "application/json",
+               "Authorization": `Bearer ${token}`
+          },
+          body: status
+     }),
 } as const;

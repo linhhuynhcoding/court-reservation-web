@@ -17,7 +17,7 @@ transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:rin
 const TAG_LIST_STYLE = `h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground grid w-full grid-cols-5`;
 
 const TABS = [
-  { value: "1", name: "Tp Hồ Chí Minh" },
+  { value: "Tp Hồ Chí Minh1", name: "Tp Hồ Chí Minh" },
   { value: "2", name: "Tp Hồ Chí Minh" },
   { value: "3", name: "Tp Hồ Chí Minh" },
   { value: "4", name: "Tp Hồ Chí Minh" },

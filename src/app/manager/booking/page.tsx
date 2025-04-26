@@ -1,6 +1,7 @@
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { ScheduelBooking } from './[id]/schedule';
+import { ScheduelBooking } from './schedule';
+import { BookingList } from './booking-list';
 
 const TAG_TRIGGER_STYLE = `inline-flex w-full items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background w-fit
 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none
@@ -8,11 +9,8 @@ transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:rin
 const TAG_LIST_STYLE = `h-10 items-center w-full flex justify-stretch rounded-md bg-muted p-1 text-muted-foreground grid w-full grid-cols-5`;
 
 const TABS = [
-  { value: "1", name: "Tp Hồ Chí Minh" },
+  { value: "1", name: "Danh sách" },
   { value: "2", name: "Lịch" },
-  { value: "3", name: "Tp Hồ Chí Minh" },
-  { value: "4", name: "Tp Hồ Chí Minh" },
-  { value: "5", name: "Tp Hồ Chí Minh" },
 ];
 
 export default function BookingPage() {
@@ -33,7 +31,9 @@ export default function BookingPage() {
 
           </div>
           <div className="border bg-white rounded-lg w-full p-10 overflow-auto max-h-[800px]">
-            <TabsContent value="account">Make changes to your account here.</TabsContent>
+            <TabsContent value="1">
+              <BookingList></BookingList>
+            </TabsContent>
             <TabsContent value="2">
               <ScheduelBooking></ScheduelBooking>
             </TabsContent>

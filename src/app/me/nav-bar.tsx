@@ -1,8 +1,13 @@
 "use client";
+
 import { useAppContext } from "@/components/app-provider";
 
 import Image from "next/image";
 import NavLink from "@/components/NavLink";
+import { Button } from "@/components/ui/button";
+import { handleErrorApi } from "@/lib/utils";
+import authApi from "@/apis/auth";
+import { useRouter } from "next/navigation";
 
 
 const HREFS = [
@@ -13,7 +18,18 @@ const HREFS = [
    
 
 export function NavBar() {
-     const { account } = useAppContext();
+     const router = useRouter();
+     const { account, setAccount } = useAppContext();
+
+     const handleLogout = async () => {
+          try {
+              await authApi.logout();
+              setAccount(null);
+              router.push("/login");
+          } catch (error) {
+               handleErrorApi({error});
+          }
+     }
 
      return (
           <nav className="w-full flex flex-col justify-start basis-1/3 border rounded-lg">
@@ -37,6 +53,10 @@ export function NavBar() {
                     </NavLink>
 
                </ul>
+               <div className="flex-1"></div>
+               <div className="p-4 self-end">
+                    <Button onClick={() => handleLogout()} variant={"outline"}>Đăng xuất</Button>
+               </div>
           </nav>
      )
 }

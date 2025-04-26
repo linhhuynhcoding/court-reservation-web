@@ -77,7 +77,7 @@ export function CourtView({ location = null, name = null, date = null }: { locat
                     </div>
 
                </div>
-               <div className="grid md:grid-cols-3 grid-cols-1 gap-4 p-4 justify-around">
+               <div className="grid md:grid-cols-3 grid-cols-1 gap-4 p-4 items-stretch justify-around">
                     {
                          isLoading
                               ?

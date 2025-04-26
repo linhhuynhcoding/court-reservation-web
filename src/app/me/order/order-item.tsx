@@ -44,8 +44,8 @@ export const OrderItem: React.FC<Props> = ({ order }) => {
                               <div className="pr-6">
                                    <h1>{item.quantity}</h1>
                               </div>
-                              <div >
-                                   <h1>{((item.quantity ?? 0) * item.product.price).toLocaleString("vi-VN")}đ</h1>
+                              <div className="w-[100px] text-right">
+                                   <h1>{(item.totalPrice ?? 0).toLocaleString("vi-VN")}đ</h1>
                               </div>
                          </div>
                     })

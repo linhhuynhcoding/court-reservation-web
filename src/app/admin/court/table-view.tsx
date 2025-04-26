@@ -22,20 +22,22 @@ import {
      AlertDialogTitle,
      AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+
 import {
-     Dialog,
-     DialogContent,
-     DialogDescription,
-     DialogHeader,
-     DialogTitle,
-     DialogTrigger,
-} from "@/components/ui/dialog";
+     Select,
+     SelectContent,
+     SelectItem,
+     SelectTrigger,
+     SelectValue,
+} from "@/components/ui/select"
+
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import BadgeCustom from '@/components/ui/badge-custom';
 
 function TableCourtView() {
-     const router = useRouter();
-     const [filter, setFilter] = useState<CourtFilter>(CourtFilterSchema.parse({ pageSize: 50 }));
+     const router = useRouter();   
+     const [filter, setFilter] = useState<CourtFilter>(CourtFilterSchema.parse({ pageSize: 50, status: null }));
      const { data, isLoading } = useGetAllCourts(filter);
      const useDeleteCourt = useDeleteCourtMutation();
 
@@ -65,35 +67,18 @@ function TableCourtView() {
                     {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                     <TableHeader>
                          <TableRow className=' p-2  shadow font-bold '>
-                              <TableHead className="text-red-700 w-[100px]">ID</TableHead>
-                              <TableHead className='text-red-700 '>Name</TableHead>
-                              <TableHead className='text-red-700 '>Phone</TableHead>
-                              <TableHead className="text-red-700 text-right">NoC</TableHead>
-                              <TableHead className="text-red-700 text-right">Price</TableHead>
-                              <TableHead className="text-red-700 text-right">City</TableHead>
-                              <TableHead className="text-red-700 ">Status</TableHead>
+                              <TableHead className="text-red-700 w-[100px]">#ID</TableHead>
+                              <TableHead className='text-red-700 '>Tổ chức</TableHead>
+                              <TableHead className='text-red-700 '>Liên lạc</TableHead>
+                              <TableHead className="text-red-700 text-right">Số sân</TableHead>
+                              <TableHead className="text-red-700 text-right">Giá thuê</TableHead>
+                              <TableHead className="text-red-700 text-right">Thành phố</TableHead>
+                              <TableHead className="text-red-700 ">Tình trạng</TableHead>
+                              <TableHead className="text-red-700 ">Quản lý</TableHead>
                               <TableHead className="text-red-700 text-right">#</TableHead>
                          </TableRow>
                     </TableHeader>
                     <TableBody>
-                         <TableRow >
-                              <TableCell>0</TableCell>
-                              <TableCell>aaaaaa</TableCell>
-                              <TableCell>aaaaaa</TableCell>
-                              <TableCell className='text-right'>bbbb</TableCell>
-                              <TableCell className='text-right'>bbbb</TableCell>
-                              <TableCell className='text-right'>bbbbbbbb</TableCell>
-                              <TableCell className=''>bbbbbbbbb</TableCell>
-                              <TableCell className='text-red-700 text-right flex justify-end gap-3'>
-                                   <Button variant={"outline"} className='bg-emerald-400 text-white hover:bg-emerald-300 hover:text-white hover:cursor-pointer'>
-                                        Chỉnh sửa
-                                   </Button>
-                                   <Button variant={"outline"} className='w-[100px] bg-rose-500 text-white hover:bg-rose-300 hover:text-white hover:cursor-pointer'>
-                                        Xóa
-                                   </Button>
-                              </TableCell>
-
-                         </TableRow>
                          {
                               !isLoading ?
                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -105,7 +90,22 @@ function TableCourtView() {
                                              <TableCell className='text-right'>{c?.numberOfCourts}</TableCell>
                                              <TableCell className='text-right'>{Number(c?.price).toLocaleString("vi")}</TableCell>
                                              <TableCell className='text-right'>{c?.address?.city}</TableCell>
-                                             <TableCell className=''>{c?.status}</TableCell>
+                                             <TableCell className=''>
+                                                  <div className="self-end">
+                                                       <Select defaultValue={c?.status} >
+                                                            <SelectTrigger className="w-fit border-none shadow-none">
+                                                                 <SelectValue placeholder="Chọn thời gian" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                 <SelectItem className="border-none" value="OPENING"><BadgeCustom variant={"success"}>Đang mở cửa</BadgeCustom></SelectItem>
+                                                                 <SelectItem className="border-none" value="MAINTAINABLE"><BadgeCustom variant={"pending"}>Đang bảo trì</BadgeCustom></SelectItem>
+                                                                 <SelectItem className="border-none" value="CLOSED"><BadgeCustom variant={"failed"}>Đã đóng cửa</BadgeCustom></SelectItem>
+                                                                 <SelectItem className="border-none" value="FULLY_BOOKED"><BadgeCustom variant={"paying"}>Đã full</BadgeCustom></SelectItem>
+                                                            </SelectContent>
+                                                       </Select>
+                                                  </div>
+                                             </TableCell>
+                                             <TableCell className=''>{c?.manager?.name ?? "Chưa có quản lý"}</TableCell>
                                              <TableCell className='text-red-700 text-right flex justify-end gap-3'>
                                                   <Button
                                                        onClick={() => {

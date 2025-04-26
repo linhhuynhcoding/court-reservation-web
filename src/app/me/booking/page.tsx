@@ -20,7 +20,7 @@ export default function Page() {
      const { account } = useAppContext();
 
      // === STATES ===
-     const [filter, setFilter] = useState<BookingFilter>(BookingFilterSchema.parse({ pageSize: 10, sort: "[[DATE,DESC]]" }));
+     const [filter, setFilter] = useState<BookingFilter>(BookingFilterSchema.parse({ pageSize: 10, sort: "[[DATE,DESC]]", duration: 360 }));
 
      // === VARIABLES ===
      const token = getAccessTokenFromLocalStorage();

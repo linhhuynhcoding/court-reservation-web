@@ -6,16 +6,23 @@ import { Role } from './constants/types';
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const cookieStore = request.cookies;
-  const accessToken = cookieStore.get('access_token') || null;
-  const account = decodeToken(accessToken?.value || '');
+  const accessToken = cookieStore.get('access_token')?.value || null;
+  const account = decodeToken(accessToken || '');
+  console.log(accessToken);
   
   if (request.nextUrl.pathname.startsWith('/me') && !accessToken) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
-
+  
   if (request.nextUrl.pathname.startsWith('/login') && accessToken) {
+    console.log("redirecting... home page")
     return NextResponse.redirect(new URL('/', request.url))
   }
+
+  // Nếu là Admin thì chỉ được vào route /admin
+  // if (!request.nextUrl.pathname.startsWith('/admin') && account?.role === Role.Admin) {
+  //   return NextResponse.redirect(new URL('/admin', request.url));
+  // }
 
   if (request.nextUrl.pathname.startsWith('/admin')) {
     if (account?.role === Role.Admin) {

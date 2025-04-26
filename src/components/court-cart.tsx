@@ -27,8 +27,8 @@ function CourtCart({ orga = {
      id: 0
 } }: { orga?: OrgaResponse }) {
      return (
-          <div className={`relative bg-white flex flex-col justify-self-stretch border border-xs border-gray-200
- md:w-2xs w-full  p-3 rounded-md gap-2 max-h-[500px] hover:cursor-pointer`}>
+          <div className={`relative bg-white flex flex-col  justify-self-stretch border border-xs border-gray-200
+ md:w-2xs w-full h-full p-3 rounded-md gap-2 max-h-[500px] hover:cursor-pointer`}>
 
                <div className={`relative flex justify-items-stretch w-auto h-52 overflow-hidden`}>
                     <Image unoptimized className="rounded-sm h-full" 

@@ -3,10 +3,10 @@ import accountApi from "../apis/account"
 import { BaseFilter } from "@/schemas/filter.schemas"
 import { queryClient } from "@/components/QueryProvider"
 
-export const useMe = () => {
+export const useMe = (accessToken: string) => {
      return useQuery({
-          queryKey: ['account-me'],
-          queryFn: accountApi.me
+          queryKey: ['account-me', accessToken],
+          queryFn: () => accountApi.me(accessToken)
      })
 }
 
@@ -17,11 +17,17 @@ export const useGetAccountsByRole = (role: string, filter: BaseFilter) => {
      })
 }
 
-export const useUpadateAccountMutation = () =>{
+export const useUpadateAccountMutation = () => {
      return useMutation({
           mutationFn: accountApi.updateAccount,
           onSuccess: () => {
-               queryClient.invalidateQueries({queryKey: ['account-me']})
+               queryClient.invalidateQueries({ queryKey: ['account-me'] })
           }
      })
+}
+
+export const useAddAccountMutation = () => {
+     return useMutation({
+          mutationFn: accountApi.addAccount,
+     });
 }
