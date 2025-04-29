@@ -10,6 +10,7 @@ const BOOKING_BAGDE_MAPPING: { [index: string]: string } = {
      "BOOKED": "success",
      "FAILED": "failed",
      "PAYING": "paying",
+     "WAITING": "waiting",
 
 } as const;
 

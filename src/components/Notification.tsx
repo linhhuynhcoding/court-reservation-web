@@ -18,7 +18,7 @@ export const Notification: React.FC = () => {
                     {noti.length}
                </Badge>
                <IoMdNotifications className="text-sky-700 " size={26} />
-               <div className="scale-0 group-hover:scale-100 transition-all duration-300 ">
+               <div className="scale-0 z-10 group-hover:scale-100 transition-all duration-300 ">
                     <NotificationPopup messages={noti} />
                </div>
           </div>
@@ -32,7 +32,11 @@ export const NotificationMessage: React.FC<MessageProps> = ({ message }) => {
      return (
           <div className="flex flex-col border-b p-2 min-h-[100px]">
                <div className="text-2xs text-blue-800 font-semibold">{message.title}</div>
-               <div className="text-xs flex-1 font-extralight">{message.message}</div>
+               <div className="text-xs flex-1 font-extralight">
+                    <div dangerouslySetInnerHTML={{
+                         __html: message.message
+                    }} />
+               </div>
                <div className="text-xs text-right font-bold text-primary">HỆ THỐNG</div>
           </div>
      )
@@ -45,7 +49,7 @@ interface NotificationPopupProps {
 export const NotificationPopup: React.FC<NotificationPopupProps> = ({ messages }) => {
      return (
           <div className="relative">
-               <div className="rounded-lg absolute border border-sky-700 top-[15px] right-0 bg-white w-[300px] h-[400px]
+               <div className=" rounded-lg absolute border border-sky-700 top-[15px] right-0 bg-white w-[300px] h-[400px]
                 shadow-lg flex flex-col ">
                     <div className="sticky min-h-[80px] border-b p-4">
                          <h1 className="text-xl font-semibold">Thông báo</h1>

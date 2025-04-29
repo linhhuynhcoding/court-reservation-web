@@ -29,7 +29,7 @@ interface Props {
 const BookingForm: React.FC<Props> = ({ court }) => {
      const { data, mutateAsync, isPending } = useBookingMutation();
      const { account } = useAppContext();
-     const {info, setInfo, changeProcess } = useInfoContext();
+     const { info, setInfo, changeProcess } = useInfoContext();
 
      const form = useForm<BookingFormPayload>({
           resolver: zodResolver(BookingFormSchema),
@@ -59,6 +59,11 @@ const BookingForm: React.FC<Props> = ({ court }) => {
                values.date.setMinutes(Number(values.time.split(":")[1]));
                values.date.setSeconds(0);
                console.log(values);
+
+               if (values.date < new Date()) {
+                    toast.error("Ngày đặt sân không hợp lệ!");
+                    return;
+               }
 
                const payload: PlaceBookingPayload = {
                     courtId: Number(values.courtId),

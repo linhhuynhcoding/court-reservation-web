@@ -37,20 +37,21 @@ const durations: { [index: number]: string } = {
      [-7]: "Tuần tới",
 }
 
-export function ScheduelBooking() {
-     // === CONTEXT ===
-     const { account } = useAppContext();
-     const { org } = useManagerContext();
+interface Props {
+     id: number;
+}
+
+export const ScheduelBookingForUser: React.FC<Props> = ({ id }) => {
 
      // === STATES ===
-     const [filter, setFilter] = useState<BookingFilter>(BookingFilterSchema.parse({ pageSize: 10, sort: "[[DATE,DESC]]", duration: 7 }));
+     const [filter, setFilter] = useState<BookingFilter>(BookingFilterSchema.parse({ pageSize: 10, sort: "[[DATE,DESC]]", duration: -7 }));
      const eventsService = useState(() => createEventsServicePlugin())[0];
 
      // === VARIABLES ===
      const token = getAccessTokenFromLocalStorage();
 
      // === QUERIES ===
-     const { data, isLoading } = useGetCourtBookings(org?.id ?? 0, filter, token ?? "");
+     const { data, isLoading } = useGetCourtBookings(id ?? 0, filter, token ?? "");
 
      // === MEMO ===
      const bookings: BookingResponse[] = useMemo(() => data?.payload?.data?.content ?? [], [data]);
@@ -62,7 +63,7 @@ export function ScheduelBooking() {
 
                return {
                     id: booking.id!,
-                    title: booking.courtName + " - " + (booking.account?.name ?? ""),
+                    title: booking.courtName + "",
                     start: timeStart,
                     end: timeEnd
                }
@@ -107,28 +108,8 @@ export function ScheduelBooking() {
      }, [events])
 
      return (
-          <div className='flex flex-col gap-4'>
-               <div className="flex justify-end border p-2 rounded-lg">
-                    <div className="self-end">
-                         <Select defaultValue="1" onValueChange={(value) => {
-                              setFilter({
-                                   ...filter,
-                                   duration: Number(value)
-                              })
-                         }}>
-                              <SelectTrigger className="w-full">
-                                   <SelectValue placeholder="Chọn thời gian" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                   <SelectItem value="-7">{durations[-7]}</SelectItem>
-                                   <SelectItem value="1">{durations[1]}</SelectItem>
-                                   <SelectItem value="7">{durations[7]}</SelectItem>
-                                   <SelectItem value="30">{durations[30]}</SelectItem>
-                                   <SelectItem value="180">{durations[180]}</SelectItem>
-                              </SelectContent>
-                         </Select>
-                    </div>
-               </div>
+          <div className='object-contain'>
+               
                {
                     events.length && !isLoading
                          ?

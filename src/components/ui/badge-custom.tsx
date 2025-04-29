@@ -25,6 +25,10 @@ const Variants: VariantType = {
           content: "Đang xử lý",
           style: "bg-blue-700"
      },
+     "waiting": {
+          content: "Đang chờ nhận sân",
+          style: "bg-teal-700"
+     },
 } as const;
 
 interface Props {

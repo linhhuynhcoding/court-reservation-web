@@ -170,7 +170,7 @@ export default function BookingPage() {
                                              : "02 Võ Oanh, Phường 21, Quận Bình Thạnh, Tp Hồ Chí Minh"}
                                    </span>
                               </div>
-                              <div className="relative ">
+                              <div className="relative z-0">
                                    <Image className="rounded-md" src={SAMPLE_IMAGE} objectFit="cover" fill alt=""></Image>
                               </div>
                          </div>

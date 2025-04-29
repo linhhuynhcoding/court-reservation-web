@@ -1,5 +1,14 @@
 "use client";
 
+import {
+     Dialog,
+     DialogContent,
+     DialogDescription,
+     DialogFooter,
+     DialogHeader,
+     DialogTitle,
+     DialogTrigger,
+} from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
 import { useGetCourt } from "@/queries/useCourt"
 import { useParams, useRouter } from "next/navigation";
@@ -17,6 +26,7 @@ const SAMPLE_IMAGE = sample.src;
 
 import Image from "next/image";
 import { useMemo } from "react";
+import { ScheduelBookingForUser } from "./schedule";
 
 export default function DetailCourtPage() {
      const router = useRouter();
@@ -37,7 +47,15 @@ export default function DetailCourtPage() {
                               </h2>
                          </div>
                          <div className="flex gap-6 pr-10">
-                              <Button variant="outline" className="pl-8 pr-8 text-sky-700 border-sky-700 h-[40px] w-[160px] hover:text-sky-700 hover:cursor-pointer" size={"lg"}>Lịch trống</Button>
+                              {/* XEM LICH */}
+                              <Dialog>
+                                   <DialogTrigger>
+                                        <Button variant="outline" className="pl-8 pr-8 text-sky-700 border-sky-700 h-[40px] w-[160px] hover:text-sky-700 hover:cursor-pointer" size={"lg"}>Lịch trống</Button>
+                                   </DialogTrigger>
+                                   <DialogContent className="max-w-[90vw] max-h-[90vh] overflow-y-auto">
+                                        <ScheduelBookingForUser id={Number(_id)}></ScheduelBookingForUser>
+                                   </DialogContent>
+                              </Dialog>
                               <Button onClick={() => { router.push(`/booking/${_id}`) }}
                                    variant="outline" className="pl-8 pr-8 text-white bg-sky-700 h-[40px] w-[160px] hover:bg-sky-700 hover:text-white hover:cursor-pointer " size={"lg"}>Đặt ngay</Button>
                          </div>

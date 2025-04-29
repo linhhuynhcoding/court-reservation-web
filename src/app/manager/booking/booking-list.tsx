@@ -38,6 +38,7 @@ const BOOKING_BAGDE_MAPPING: { [index: string]: string } = {
      "BOOKED": "success",
      "FAILED": "failed",
      "PAYING": "paying",
+     "WAITING": "waiting",
 
 } as const;
 
@@ -116,14 +117,15 @@ export const BookingList: React.FC<BookingListProps> = () => {
                               <TableHead className="text-gray-700 ">Số giờ thuê</TableHead>
                               <TableHead className="text-gray-700 ">Order Nước</TableHead>
                               <TableHead className="text-gray-700 ">Tình trạng</TableHead>
+                              <TableHead className="text-gray-700 ">Tổng tiền</TableHead>
                               <TableHead className="text-gray-700 ">#</TableHead>
                          </TableRow>
                     </TableHeader>
                     <TableBody>
                          {
-                              bookings.length ?
+                              bookings.length && !isLoading ?
                                    bookings.map((booking, index: number) => {
-                                        return <BookingRow key={index} booking={booking} />
+                                        return <BookingRow key={booking.id} booking={booking} />
                                    })
                                    : null
                          }
@@ -166,15 +168,17 @@ interface BookingRowProps {
 }
 
 const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
+     console.log("bookingID: ", booking?.id, " booking: ", booking);
      const useUpdateStatus = useUpdateStatusBookingMutation();
 
      // === MEMO ===
      const timeStart = useMemo(() => {
           return new Date(toGMT7(booking.timeStart)).toLocaleDateString("vi-VN", {
                hour: "2-digit",
-               minute: "2-digit"
+               minute: "2-digit",
+               hour12: false
           })
-     }, []);
+     }, [booking]);
 
      const duration = useMemo(() => {
           const dateStart = new Date(booking.timeStart);
@@ -186,7 +190,7 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
      const handleUpdateStatus = async (status: string) => {
           try {
                const token = getAccessTokenFromLocalStorage();
-               const response = await useUpdateStatus.mutateAsync({id: booking.id!, status, token: token!});
+               const response = await useUpdateStatus.mutateAsync({ id: booking.id!, status, token: token! });
 
                toast.success(response.payload.message);
 
@@ -206,19 +210,26 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
           <TableCell className=''>{ }</TableCell>
           <TableCell className=''>
                <div className="self-end">
-                    <Select defaultValue={booking.status} onValueChange={(value) => handleUpdateStatus(value)}>
-                         <SelectTrigger className="w-fit border-none shadow-none">
-                              <SelectValue placeholder="Chọn thời gian" />
-                         </SelectTrigger>
-                         <SelectContent>
-                              <SelectItem className="border-none" value="BOOKED"><BadgeCustom variant={"success"}>Hoàn tất</BadgeCustom></SelectItem>
-                              <SelectItem className="border-none" value="PAYING"><BadgeCustom variant={"paying"}></BadgeCustom></SelectItem>
-                              <SelectItem className="border-none" value="PENDING"><BadgeCustom variant={"pending"}></BadgeCustom></SelectItem>
-                              <SelectItem className="border-none" value="FAILED"><BadgeCustom variant={"failed"}></BadgeCustom></SelectItem>
-                         </SelectContent>
-                    </Select>
+                    {
+                         booking.status ?
+                              <Select defaultValue={booking.status} onValueChange={(value) => handleUpdateStatus(value)}>
+                                   <SelectTrigger className="w-fit border-none shadow-none">
+                                        <SelectValue placeholder="" defaultValue={booking.status}/>
+                                   </SelectTrigger>
+                                   <SelectContent>
+                                        <SelectItem className="border-none" value="BOOKED"><BadgeCustom variant={"success"}>Hoàn tất</BadgeCustom></SelectItem>
+                                        <SelectItem className="border-none" value="PAYING"><BadgeCustom variant={"paying"}></BadgeCustom></SelectItem>
+                                        <SelectItem className="border-none" value="PENDING"><BadgeCustom variant={"pending"}></BadgeCustom></SelectItem>
+                                        <SelectItem className="border-none" value="FAILED"><BadgeCustom variant={"failed"}></BadgeCustom></SelectItem>
+                                        <SelectItem className="border-none" value="WAITING"><BadgeCustom variant={"waiting"}></BadgeCustom></SelectItem>
+                                   </SelectContent>
+                              </Select>
+                              : null
+                    }
                </div>
-
+          </TableCell>
+          <TableCell className='text-yellow-500 font-bold '>
+               {booking?.payment?.amount?.toLocaleString("vi-VN") ?? 0} đ
           </TableCell>
           <TableCell className=''>{booking?.payment?.status === 'SUCCESS' ? "Đã thanh toán" : "Chưa thanh toán"}</TableCell>
           <TableCell className='text-red-700 text-right flex justify-end gap-3'>

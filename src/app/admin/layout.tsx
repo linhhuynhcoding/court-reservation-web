@@ -20,7 +20,7 @@ export default function Layout({
           <>
                <div className='grid min-h-screen grid-cols-6'>
                     <aside className='z-1 col-span-1 border-r' aria-label='Sidebar'>
-                         <div className='flex h-full flex-col bg-white py-2 px-3'>
+                         <div className='flex h-full flex-col bg-white py-2 px-3 pt-10'>
                               <ul className='space-y-1'>
                                    <NavLink hrefs={herfs}
                                         hover_style="hover:bg-orange-300 hover:text-white rounded-sm"

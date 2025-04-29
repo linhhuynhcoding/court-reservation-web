@@ -8,6 +8,7 @@ import { useMemo } from "react";
 const BOOKING_BAGDE_MAPPING: { [index: string]: string } = {
      "PENDING": "pending",
      "BOOKED": "success",
+     "WAITING": "waiting",
      "FAILED": "failed",
      "PAYING": "paying",
 
@@ -57,7 +58,8 @@ export const BookingItem: React.FC<Props> = ({ booking }) => {
                </div>
                <div className="flex flex-col justify-between">
                     <div className="flex flex-col items-end gap-1">
-                         <BadgeCustom variant={BOOKING_BAGDE_MAPPING[booking.status ?? "PENDING"]}></BadgeCustom>
+                         <BadgeCustom variant={BOOKING_BAGDE_MAPPING[booking.status ?? "PENDING"]}>
+                         </BadgeCustom>
                     </div>
                     <div className="self-end">
                          <h1 className="font-semibold text-2xl text-blue-800">{(booking.payment?.amount ?? 0).toLocaleString("vi-VN")}đ</h1>
