@@ -21,12 +21,14 @@ import { CalendarIcon } from "lucide-react";
 import log from "@/lib/logger";
 import { FormInfoLifting, useInfoContext } from "./info-provider";
 import { PaymentFor, PaymentMethod } from "@/constants/types";
+import { useRouter } from "next/navigation";
 
 interface Props {
      court: OrgaResponse;
 }
 
 const BookingForm: React.FC<Props> = ({ court }) => {
+     const router = useRouter();
      const { data, mutateAsync, isPending } = useBookingMutation();
      const { account } = useAppContext();
      const { info, setInfo, changeProcess } = useInfoContext();
@@ -52,6 +54,7 @@ const BookingForm: React.FC<Props> = ({ court }) => {
                const token = getAccessTokenFromLocalStorage();
                if (!account || !token) {
                     log.warn("Chưa xác thực tài khoản!");
+                    router.push("/login");
                     return;
                };
 

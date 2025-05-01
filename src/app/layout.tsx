@@ -12,6 +12,7 @@ import { cookies } from "next/headers";
 import { handleErrorApi } from "../lib/utils";
 import { AppProvider } from "../components/app-provider";
 import { ThemeProvider } from "next-themes";
+import { Loading } from "@/components/loading";
 
 export const metadata: Metadata = {
   title: "PickleBanh - Nền tảng đặt sân Pickleball siêu rẻ, siêu tiện",

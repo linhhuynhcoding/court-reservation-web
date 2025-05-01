@@ -21,6 +21,7 @@ import { useAppContext } from "@/components/app-provider";
 import log from "@/lib/logger";
 import { PaymentForm } from "./payment";
 import { usePaymentBookingMutation } from "@/queries/usePayment";
+import { set } from "date-fns";
 
 const SAMPLE_IMAGE = sample.src;
 
@@ -31,6 +32,7 @@ export default function BookingPage() {
      const router = useRouter();
      const { id: _id } = useParams();
      const { data } = useGetCourt(Number(_id), !!_id);
+     const { setLoading } = useAppContext();
      const { info, process, changeProcess } = useInfoContext();
      const usePlaceOrder = usePlaceOrderBookingMutation();
      const usePaymentBooking = usePaymentBookingMutation();
@@ -46,6 +48,7 @@ export default function BookingPage() {
 
      const handlePlaceOrder = async () => {
           try {
+               setLoading(true);
                const payload = info?.order;
                const token = getAccessTokenFromLocalStorage();
 
@@ -55,8 +58,9 @@ export default function BookingPage() {
 
                log.info(response);
                changeProcess(3);
+               setLoading(false);
 
-               router.push("/me")
+               // router.push("/me")
           }
           catch (error) {
                handleErrorApi({ error });
@@ -65,19 +69,22 @@ export default function BookingPage() {
 
      const handlePurchase = async () => {
           try {
+               // setLoading(false);
                const payload = info?.payment;
                const token = getAccessTokenFromLocalStorage();
-
+               
                if (!payload || !token) return;
-
+               
                const response = await usePaymentBooking.mutateAsync({ payload, token });
-
+               
                log.info(response);
                if (response.payload?.data?.redirect) {
                     window.open(response.payload?.data?.redirectUrl, "_blank")
                }
-
+               
+               // setLoading(true);
                changeProcess(4);
+               router.push("/me")
           } catch (error) {
                handleErrorApi({ error });
 
@@ -244,7 +251,7 @@ export default function BookingPage() {
                               }
                               {
                                    process === 3 &&
-                                   <Button onClick={() => handlePurchase()}  className="mt-4 w-full bg-blue-900 text-white hover:bg-blue-600 hover:cursor-pointer">Thanh toán</Button>
+                                   <Button onClick={() => handlePurchase()} className="mt-4 w-full bg-blue-900 text-white hover:bg-blue-600 hover:cursor-pointer">Thanh toán</Button>
                               }
                          </div>
                     </div>

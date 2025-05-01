@@ -10,20 +10,25 @@ import { QueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useMe } from "@/queries/useAccount";
 import { useRouter } from "next/navigation";
+import { Loading } from "./loading";
 
 
 const AppContext = createContext<{
      isAuth: boolean;
+     isLoading: boolean;
      account: AccountType | null;
      role: RoleType | null;
      setAccount: (account: AccountType | null) => void;
      setRole: (role: RoleType) => void;
+     setLoading: (isLoading: boolean) => void;
 }>({
      isAuth: false,
+     isLoading: false,
      account: null,
      role: null,
      setAccount: () => { },
      setRole: () => { },
+     setLoading: () => { },
 });
 
 export const useAppContext = () => {
@@ -38,6 +43,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
      const [role, setRoleState] = useState<RoleType | null>(() => {
           return null
      })
+     const [isLoading, setLoading] = useState<boolean>(false);
 
      const accessToken = getAccessTokenFromLocalStorage();
      const { data } = useMe(accessToken ?? "");
@@ -55,7 +61,13 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
      }, [_account]);
 
      return (
-          <AppContext value={{ isAuth: !!account, account, role, setAccount: setUserState, setRole: setRoleState }}>
+          <AppContext value={{ isAuth: !!account, account, role, setAccount: setUserState, setRole: setRoleState, isLoading, setLoading }}>
+               {
+                    // isLoading ?
+                    //      <Loading />
+                    //      : null
+               }
+
                {children}
           </AppContext>
      );

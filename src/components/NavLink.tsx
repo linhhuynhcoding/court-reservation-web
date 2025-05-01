@@ -37,7 +37,7 @@ export default function NavLink({ hrefs, style, hover_style = LINK_HOVER_STYLE, 
                                         //      </Link>
                                         // })
                                         <NavLink hrefs={link?.children} 
-                                             style="flex items-center p-2 pl-4 border-b border-white"
+                                             style="flex items-center p-2 pl-4 border-b border-white rounded-lg"
                                              hover_style="hover:border-b hover:border-orange-800 hover:bg-orange-300"
                                              focus_style="border-b border-orange-800 bg-orange-300"
                                              >
